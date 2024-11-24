@@ -4,11 +4,16 @@ import { Objective } from "../Objective/Objective";
 import styles from "./Objectives.module.css";
 import { Button } from "../Button/Button";
 
+export type ObjectiveElem = {
+  id: number;
+  text: string;
+};
+
 export const Objectives = () => {
-  const [objectives, setObjectives] = useState([
+  const [objectives, setObjectives] = useState<ObjectiveElem[]>([
     {
       id: 0,
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur rerum, asperiores blanditiis placeat explicabo ipsam optio laboriosam impedit quia, perspiciatis nostrum numquam reiciendis et consequuntur odit repudiandae quaerat? Tempore, ducimus!`,
+      text: `get up at 7:00 a.m.`,
     },
   ]);
 
@@ -36,7 +41,7 @@ export const Objectives = () => {
   };
 
   return (
-    <div>
+    <div className={styles["objectives"]}>
       <form className={styles["objectives-form"]}>
         <textarea
           className={styles["objective-textarea"]}

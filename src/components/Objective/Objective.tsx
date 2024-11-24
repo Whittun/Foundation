@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Objective.module.css";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { ObjectiveElem } from "../Objectives/Objectives";
 
-export const Objective = ({ objective, index, deleteObjective }) => {
+type ObjectiveProps = {
+  objective: ObjectiveElem;
+  index: number;
+  deleteObjective: (index: number) => void;
+};
+
+export const Objective: React.FC<ObjectiveProps> = ({
+  objective,
+  index,
+  deleteObjective,
+}) => {
   const [checkboxes, setCheckboxes] = useState([
     {
       id: 1,
@@ -20,6 +31,10 @@ export const Objective = ({ objective, index, deleteObjective }) => {
   const [isCompleted, setCompleted] = useState(false);
   const [editing, setIsEditing] = useState(false);
   const [objectiveText, setObjectiveText] = useState(objective.text);
+
+  useEffect(() => {
+    setObjectiveText(objective.text);
+  }, [objective.text]);
 
   const checkboxHandler = (id: number) => {
     const newCheckBoxes = checkboxes.map((checkbox) =>
@@ -71,7 +86,11 @@ export const Objective = ({ objective, index, deleteObjective }) => {
             </li>
           ))}
         </ul>
-        {isCompleted && <p className={styles["completed-text"]}>Completed!</p>}
+        {isCompleted && (
+          <p id="completed" className={styles["completed-text"]}>
+            Completed!
+          </p>
+        )}
       </li>
     </>
   );

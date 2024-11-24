@@ -4,6 +4,8 @@
   padding: 20px;
   padding-top: 30px;
 
+  list-style: none;
+
   border-radius: 30px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.108);
 }
