@@ -1,0 +1,25 @@
+.objectives-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.objective-textarea {
+  height: 150px;
+  padding: 20px;
+
+  resize: none;
+
+  border-radius: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.311);
+}
+
+.objectives-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+
+  list-style: none;
+}

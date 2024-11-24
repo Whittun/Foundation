@@ -1,0 +1,87 @@
+.objective {
+  position: relative;
+
+  padding: 20px;
+  padding-top: 30px;
+
+  border-radius: 30px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.108);
+}
+
+.button {
+  position: absolute;
+  top: 8px;
+
+  display: block;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+
+  border: 2px solid rgba(0, 0, 0, 0.108);
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.button svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  color: rgba(0, 0, 0, 0.604);
+}
+
+.objective-edit {
+  right: 66px;
+}
+
+.objective-delete {
+  right: 26px;
+}
+
+.editing-input {
+  display: block;
+  width: 100%;
+  height: 110px;
+  margin-top: 20px;
+  resize: none;
+
+  font-size: 16px;
+  line-height: 1.5em;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  border: none;
+}
+
+.objective-list {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin-top: 60px;
+
+  list-style: none;
+}
+
+.objective-checkbox {
+  width: 40px;
+  height: 40px;
+
+  cursor: pointer;
+}
+
+.completed .objective-checkbox {
+  pointer-events: none;
+}
+
+.completed .objective-list,
+.completed .objective-text {
+  opacity: 0.3;
+}
+
+.completed-text {
+  color: green;
+  font-size: 20px;
+  font-weight: bold;
+}

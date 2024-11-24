@@ -1,0 +1,78 @@
+import { useState } from "react";
+import styles from "./Objective.module.css";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+
+export const Objective = ({ objective, index, deleteObjective }) => {
+  const [checkboxes, setCheckboxes] = useState([
+    {
+      id: 1,
+      active: false,
+    },
+    { id: 2, active: false },
+    { id: 3, active: false },
+    { id: 4, active: false },
+    { id: 5, active: false },
+    { id: 6, active: false },
+  ]);
+
+  const [isCompleted, setCompleted] = useState(false);
+  const [editing, setIsEditing] = useState(false);
+  const [objectiveText, setObjectiveText] = useState(objective.text);
+
+  const checkboxHandler = (id: number) => {
+    const newCheckBoxes = checkboxes.map((checkbox) =>
+      id === checkbox.id ? { ...checkbox, active: !checkbox.active } : checkbox
+    );
+
+    const status = newCheckBoxes.every((checkbox) => checkbox.active);
+
+    setCheckboxes(newCheckBoxes);
+
+    setCompleted(status);
+  };
+
+  return (
+    <>
+      <li
+        className={`${styles.objective} ${isCompleted ? styles.completed : ""}`}
+      >
+        <button
+          onClick={() => setIsEditing(!editing)}
+          className={`${styles["objective-edit"]} ${styles["button"]}`}
+        >
+          {!editing ? <EditIcon /> : <SaveIcon />}
+        </button>
+        <button
+          onClick={() => deleteObjective(index)}
+          className={`${styles["objective-delete"]} ${styles["button"]}`}
+        >
+          <DeleteForeverIcon />
+        </button>
+        {!editing ? (
+          <p className={styles["objective-text"]}>{objectiveText}</p>
+        ) : (
+          <textarea
+            className={styles["editing-input"]}
+            value={objectiveText}
+            onChange={(e) => setObjectiveText(e.target.value)}
+          ></textarea>
+        )}
+        <ul className={styles["objective-list"]}>
+          {checkboxes.map((item) => (
+            <li key={item.id}>
+              <input
+                checked={item.active}
+                className={styles["objective-checkbox"]}
+                type="checkbox"
+                onChange={() => checkboxHandler(item.id)}
+              />
+            </li>
+          ))}
+        </ul>
+        {isCompleted && <p className={styles["completed-text"]}>Completed!</p>}
+      </li>
+    </>
+  );
+};
