@@ -15,6 +15,10 @@ export const Objectives = () => {
       id: 0,
       text: `get up at 7:00 a.m.`,
     },
+    {
+      id: 1,
+      text: `get up at 6:30 a.m.`,
+    },
   ]);
 
   const [inputValue, setInputValue] = useState("");
