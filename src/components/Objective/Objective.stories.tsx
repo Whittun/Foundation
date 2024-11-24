@@ -44,14 +44,12 @@ export const Completed: Story = {
 
     const checkboxes = canvas.getAllByRole("checkbox");
 
-    await checkboxes.forEach(async (checkbox) => {
-      await userEvent.click(checkbox);
+    checkboxes.forEach((checkbox) => {
+      userEvent.click(checkbox);
     });
 
-    await waitFor(() => {
-      const element = canvasElement.querySelector("#completed");
-      expect(element).toBeInTheDocument();
-    });
+    const element = await canvas.findByText("Completed!");
+    expect(element).toBeInTheDocument();
   },
   args: {
     objective: {
