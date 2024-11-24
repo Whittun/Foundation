@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Objective } from "./Objective";
-import { expect, userEvent, waitFor, within } from "@storybook/test";
+import { expect, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof Objective> = {
   title: "Components/Objective",
