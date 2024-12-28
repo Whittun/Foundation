@@ -3,45 +3,38 @@ import { Objective } from "../Objective/Objective";
 
 import styles from "./Objectives.module.css";
 import { Button } from "../Button/Button";
-
-export type ObjectiveElem = {
-  id: number;
-  text: string;
-};
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { addValue, deleteValue, selectObjectives } from "./ObjectivesSlice";
+import { useParams } from "react-router";
 
 export const Objectives = () => {
-  const [objectives, setObjectives] = useState<ObjectiveElem[]>([
-    {
-      id: 0,
-      text: `get up at 7:00 a.m.`,
-    },
-    {
-      id: 1,
-      text: `get up at 6:30 a.m.`,
-    },
-  ]);
-
   const [inputValue, setInputValue] = useState("");
+
+  const { categoryName } = useParams();
+
+  if (!categoryName) {
+    throw new Error("page is not defined");
+  }
+
+  const objectives = useAppSelector((state) =>
+    selectObjectives(state, categoryName)
+  );
+  const dispatch = useAppDispatch();
 
   const addObjective = () => {
     const newObjective = {
       id: objectives.length + 1,
       text: inputValue,
+      categoryName,
     };
 
-    setObjectives([...objectives, newObjective]);
+    dispatch(addValue(newObjective));
 
     setInputValue("");
   };
 
   const deleteObjective = (id: number) => {
-    const newObjectives = objectives.filter((objective) => {
-      if (id !== objective.id) {
-        return objective;
-      }
-    });
-
-    setObjectives(newObjectives);
+    dispatch(deleteValue(id));
   };
 
   return (

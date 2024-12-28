@@ -75,14 +75,17 @@ export const Objective: React.FC<ObjectiveProps> = ({
           ></textarea>
         )}
         <ul className={styles["objective-list"]}>
-          {checkboxes.map((item) => (
-            <li key={item.id}>
+          {checkboxes.map((item, index) => (
+            <li key={item.id} className={styles["objective-item"]}>
               <input
                 checked={item.active}
                 className={styles["objective-checkbox"]}
                 type="checkbox"
                 onChange={() => checkboxHandler(item.id)}
               />
+              <span className={styles["objective-day"]}>
+                {!item.active ? index + 1 + " day" : ""}
+              </span>
             </li>
           ))}
         </ul>
