@@ -4,7 +4,11 @@ import { Objective } from "../Objective/Objective";
 import styles from "./Objectives.module.css";
 import { Button } from "../Button/Button";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { addValue, deleteValue, selectObjectives } from "./ObjectivesSlice";
+import {
+  addObjective,
+  deleteObjective,
+  selectObjectives,
+} from "./ObjectivesSlice";
 import { useParams } from "react-router";
 
 export const Objectives = () => {
@@ -16,25 +20,35 @@ export const Objectives = () => {
     throw new Error("page is not defined");
   }
 
-  const objectives = useAppSelector((state) =>
-    selectObjectives(state, categoryName)
+  const allObjectives = useAppSelector((state) => selectObjectives(state));
+
+  const objectives = allObjectives.filter(
+    (objective) => objective.categoryName === categoryName
   );
+
   const dispatch = useAppDispatch();
 
-  const addObjective = () => {
+  const buttonHandler = () => {
     const newObjective = {
-      id: objectives.length + 1,
+      id: Date.now(),
       text: inputValue,
       categoryName,
+      objectiveValues: [
+        {
+          id: 1,
+          active: false,
+        },
+        { id: 2, active: false },
+        { id: 3, active: false },
+        { id: 4, active: false },
+        { id: 5, active: false },
+        { id: 6, active: false },
+      ],
     };
 
-    dispatch(addValue(newObjective));
+    dispatch(addObjective(newObjective));
 
     setInputValue("");
-  };
-
-  const deleteObjective = (id: number) => {
-    dispatch(deleteValue(id));
   };
 
   return (
@@ -48,7 +62,7 @@ export const Objectives = () => {
         <Button
           text="add objective"
           disabled={!inputValue}
-          onClick={addObjective}
+          onClick={buttonHandler}
         />
       </form>
 
@@ -56,10 +70,9 @@ export const Objectives = () => {
         {!!objectives.length &&
           objectives.map((objective) => (
             <Objective
-              deleteObjective={deleteObjective}
+              deleteObjective={() => dispatch(deleteObjective(objective.id))}
               index={objective.id}
               key={objective.id}
-              objective={objective}
             />
           ))}
       </ul>

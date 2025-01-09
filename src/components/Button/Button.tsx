@@ -4,9 +4,13 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   text: string;
 };
 
-export const Button: React.FC<ButtonProps> = ({ text, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({
+  text,
+  className,
+  ...props
+}) => {
   return (
-    <button {...props} className={styles.button}>
+    <button {...props} className={styles.button + " " + className}>
       {text}
     </button>
   );

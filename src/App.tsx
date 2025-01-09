@@ -7,8 +7,8 @@ function App() {
   return (
     <div className={styles["app-wrapper"]}>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/:categoryName" element={<Objectives />} />
+        <Route path="/Foundation" element={<Layout />}>
+          <Route path=":categoryName" element={<Objectives />} />
         </Route>
       </Routes>
     </div>

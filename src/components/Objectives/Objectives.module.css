@@ -1,6 +1,5 @@
 .objectives {
-  max-width: 500px;
-  width: 100%;
+  flex-grow: 1;
 }
 
 .objectives-form {

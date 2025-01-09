@@ -1,7 +1,39 @@
 .categories {
-  width: 200px;
-  height: 100vh;
   margin: 0;
+  padding: 20px;
 
-  background-color: rgba(0, 0, 0, 0.093);
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 0 20px 20px 0;
+}
+
+.input {
+  padding: 10px;
+
+  border-radius: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.311);
+}
+
+.button {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+
+  background-color: #ffffff;
+}
+
+.categoriesList {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+
+  list-style: none;
+}
+
+.categoriesItem {
+  padding: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.categoriesItem:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }

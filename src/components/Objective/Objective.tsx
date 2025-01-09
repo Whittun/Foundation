@@ -3,49 +3,67 @@ import styles from "./Objective.module.css";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { ObjectiveElem } from "../Objectives/Objectives";
+import {
+  addObjectiveValue,
+  editObjective,
+  selectObjective,
+} from "../Objectives/ObjectivesSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 type ObjectiveProps = {
-  objective: ObjectiveElem;
   index: number;
   deleteObjective: (index: number) => void;
 };
 
 export const Objective: React.FC<ObjectiveProps> = ({
-  objective,
   index,
   deleteObjective,
 }) => {
-  const [checkboxes, setCheckboxes] = useState([
-    {
-      id: 1,
-      active: false,
-    },
-    { id: 2, active: false },
-    { id: 3, active: false },
-    { id: 4, active: false },
-    { id: 5, active: false },
-    { id: 6, active: false },
-  ]);
-
   const [isCompleted, setCompleted] = useState(false);
   const [editing, setIsEditing] = useState(false);
-  const [objectiveText, setObjectiveText] = useState(objective.text);
+
+  const dispatch = useAppDispatch();
+
+  const objectiveRedux = useAppSelector((state) =>
+    selectObjective(state, index)
+  );
+
+  if (!objectiveRedux) throw new Error("objective is not defined");
+
+  const [objectiveText, setObjectiveText] = useState(objectiveRedux.text);
 
   useEffect(() => {
-    setObjectiveText(objective.text);
-  }, [objective.text]);
+    dispatch(
+      editObjective({
+        objectiveId: index,
+        text: objectiveText,
+      })
+    );
+  }, [objectiveText, dispatch, index]);
+
+  useEffect(() => {
+    const status = objectiveRedux.objectiveValues.every(
+      (checkbox) => checkbox.active
+    );
+
+    setCompleted(status);
+  }, [setCompleted, objectiveRedux.objectiveValues]);
 
   const checkboxHandler = (id: number) => {
-    const newCheckBoxes = checkboxes.map((checkbox) =>
+    const newCheckBoxes = objectiveRedux.objectiveValues.map((checkbox) =>
       id === checkbox.id ? { ...checkbox, active: !checkbox.active } : checkbox
     );
 
     const status = newCheckBoxes.every((checkbox) => checkbox.active);
 
-    setCheckboxes(newCheckBoxes);
-
     setCompleted(status);
+
+    dispatch(
+      addObjectiveValue({
+        objectiveId: index,
+        checkboxId: id,
+      })
+    );
   };
 
   return (
@@ -75,7 +93,7 @@ export const Objective: React.FC<ObjectiveProps> = ({
           ></textarea>
         )}
         <ul className={styles["objective-list"]}>
-          {checkboxes.map((item, index) => (
+          {objectiveRedux.objectiveValues.map((item, index) => (
             <li key={item.id} className={styles["objective-item"]}>
               <input
                 checked={item.active}
