@@ -113,3 +113,18 @@
   font-weight: bold;
   text-align: center;
 }
+
+@media (max-width: 400px) {
+  .objective-checkbox {
+    width: 30px;
+    height: 30px;
+  }
+
+  .objective-day {
+    font-size: 10px;
+  }
+
+  .completed-text {
+    font-size: 18px;
+  }
+}

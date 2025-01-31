@@ -27,3 +27,9 @@
 
   list-style: none;
 }
+
+@media (max-width: 600px) {
+  .objectives {
+    margin-left: 50px;
+  }
+}

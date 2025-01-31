@@ -1,9 +1,62 @@
 .categories {
+  height: 100%;
   margin: 0;
   padding: 20px;
 
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgb(245, 245, 245);
   border-radius: 0 20px 20px 0;
+  overflow-y: auto;
+
+  transition: transform 0.3s;
+}
+
+.burger {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .burger {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+
+    display: block;
+    height: 100%;
+
+    background-color: rgb(209, 209, 209);
+    border: none;
+    border-radius: 0 20px 20px 0;
+  }
+
+  .categories {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-300px);
+  }
+
+  .mobileOpen {
+    width: 100%;
+    padding-left: 50px;
+
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 1;
+  }
+
+  .arrow {
+    transform: rotate(0deg);
+
+    transition: all 0.3s !important;
+  }
+
+  .arrowLeft {
+    transform: rotate(180deg);
+  }
+
+  .mobileOpen .input {
+    width: 100%;
+  }
 }
 
 .input {
