@@ -1,5 +1,10 @@
-import { useEffect, useState } from "react";
-
-export const Input = ({ value, setValue }) => {
-  return <input onChange={setValue} type="text" value={value} />;
+export const Input = ({ value, setValue, ariaLabel }) => {
+  return (
+    <input
+      aria-label={ariaLabel}
+      onChange={setValue}
+      type="text"
+      defaultValue={value}
+    />
+  );
 };

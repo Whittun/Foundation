@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import objectivesReducer from "../components/Objectives/ObjectivesSlice";
-import categoriesReducer from "../components/Categories/CategoriesSlice.ts";
+import categoriesReducer from "../components/Categories/CategoriesSlice";
 
 export const store = configureStore({
   reducer: { objectives: objectivesReducer, categories: categoriesReducer },

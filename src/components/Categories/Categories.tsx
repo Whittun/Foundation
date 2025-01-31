@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import styles from "./Categories.module.css";
 import { addCategory, selectCategories } from "./CategoriesSlice";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { Button } from "../Button/Button";
 
 export const Categories = () => {
@@ -20,6 +20,7 @@ export const Categories = () => {
   return (
     <div className={styles.categories}>
       <input
+        aria-label={"enter name"}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         type="text"
@@ -33,7 +34,7 @@ export const Categories = () => {
       <ul className={styles.categoriesList}>
         {categories.map((category) => (
           <li className={styles.categoriesItem} key={category.id}>
-            <Link to={`${category.name}`}>{category.name}</Link>
+            <Link to={`objectives/${category.name}`}>{category.name}</Link>
           </li>
         ))}
       </ul>

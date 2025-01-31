@@ -33,15 +33,6 @@ export const Objective: React.FC<ObjectiveProps> = ({
   const [objectiveText, setObjectiveText] = useState(objectiveRedux.text);
 
   useEffect(() => {
-    dispatch(
-      editObjective({
-        objectiveId: index,
-        text: objectiveText,
-      })
-    );
-  }, [objectiveText, dispatch, index]);
-
-  useEffect(() => {
     const status = objectiveRedux.objectiveValues.every(
       (checkbox) => checkbox.active
     );
@@ -66,18 +57,33 @@ export const Objective: React.FC<ObjectiveProps> = ({
     );
   };
 
+  const saveAndEditHandler = () => {
+    if (editing) {
+      dispatch(
+        editObjective({
+          objectiveId: index,
+          text: objectiveText,
+        })
+      );
+    }
+
+    setIsEditing(!editing);
+  };
+
   return (
     <>
       <li
         className={`${styles.objective} ${isCompleted ? styles.completed : ""}`}
       >
         <button
-          onClick={() => setIsEditing(!editing)}
+          aria-label={"edit button"}
+          onClick={saveAndEditHandler}
           className={`${styles["objective-edit"]} ${styles["button"]}`}
         >
           {!editing ? <EditIcon /> : <SaveIcon />}
         </button>
         <button
+          aria-label="delete button"
           onClick={() => deleteObjective(index)}
           className={`${styles["objective-delete"]} ${styles["button"]}`}
         >
@@ -89,6 +95,7 @@ export const Objective: React.FC<ObjectiveProps> = ({
           <textarea
             className={styles["editing-input"]}
             value={objectiveText}
+            aria-label={"edit area"}
             onChange={(e) => setObjectiveText(e.target.value)}
           ></textarea>
         )}
@@ -96,19 +103,28 @@ export const Objective: React.FC<ObjectiveProps> = ({
           {objectiveRedux.objectiveValues.map((item, index) => (
             <li key={item.id} className={styles["objective-item"]}>
               <input
+                aria-label={`${index + 1} day`}
+                id={`${index + 1}day`}
                 checked={item.active}
                 className={styles["objective-checkbox"]}
                 type="checkbox"
                 onChange={() => checkboxHandler(item.id)}
               />
-              <span className={styles["objective-day"]}>
+              <label
+                htmlFor={`${index + 1}day`}
+                className={styles["objective-day"]}
+              >
                 {!item.active ? index + 1 + " day" : ""}
-              </span>
+              </label>
             </li>
           ))}
         </ul>
         {isCompleted && (
-          <p id="completed" className={styles["completed-text"]}>
+          <p
+            aria-label="completed text"
+            id="completed"
+            className={styles["completed-text"]}
+          >
             Completed!
           </p>
         )}
