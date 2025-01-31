@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import styles from "./Categories.module.css";
-import { addCategory, selectCategories } from "./CategoriesSlice.ts";
+import { addCategory, selectCategories } from "./CategoriesSlice";
 import { Link } from "react-router-dom";
 import { Button } from "../Button/Button";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
