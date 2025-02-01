@@ -21,10 +21,6 @@ export const Primary: Story = {
     },
   },
   args: {
-    objective: {
-      id: 0,
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur rerum, asperiores blanditiis placeat explicabo ipsam optio laboriosam impedit quia, perspiciatis nostrum numquam reiciendis et consequuntur odit repudiandae quaerat? Tempore, ducimus!`,
-    },
     index: 0,
     deleteObjective: () => {},
   },
@@ -52,10 +48,6 @@ export const Completed: Story = {
     expect(element).toBeInTheDocument();
   },
   args: {
-    objective: {
-      id: 0,
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur rerum, asperiores blanditiis placeat explicabo ipsam optio laboriosam impedit quia, perspiciatis nostrum numquam reiciendis et consequuntur odit repudiandae quaerat? Tempore, ducimus!`,
-    },
     index: 0,
     deleteObjective: () => {},
   },

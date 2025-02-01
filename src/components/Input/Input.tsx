@@ -1,8 +1,8 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 type InputProps = {
   value: string;
-  setValue: () => void;
+  setValue: (event: ChangeEvent<HTMLInputElement>) => void;
   ariaLabel: string;
 };
 
