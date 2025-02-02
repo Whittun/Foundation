@@ -70,6 +70,8 @@ export const Objective: React.FC<ObjectiveProps> = ({
     setIsEditing(!editing);
   };
 
+  console.log("rendered objective");
+
   return (
     <>
       <li

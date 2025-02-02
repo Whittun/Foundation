@@ -61,7 +61,12 @@ export const Categories = () => {
         <ul className={styles.categoriesList}>
           {categories.map((category) => (
             <li className={styles.categoriesItem} key={category.id}>
-              <Link to={`objectives/${category.name}`}>{category.name}</Link>
+              <Link
+                onClick={() => setIsMobileOpen(false)}
+                to={`objectives/${category.name}`}
+              >
+                {category.name}
+              </Link>
             </li>
           ))}
         </ul>

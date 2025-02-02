@@ -14,6 +14,10 @@ jest.mock("react-router", () => ({
 const mockedUseParams = jest.mocked(useParams);
 
 describe("Objectives", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test("should return the backup ui with an empty url", () => {
     console.error = jest.fn();
 
