@@ -1,0 +1,12 @@
+version: "v2.31.0-desktop.2"
+services:
+  project:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: foundation
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/app
+      - /app/node_modules
