@@ -7,7 +7,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.VITE_GITHUB_PAGES === "true" ? "/foundation/" : "/",
+  base: "/",
   server: {
     watch: {
       usePolling: true,
