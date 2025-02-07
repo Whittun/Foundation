@@ -9,7 +9,11 @@ import { store } from "./store/store.ts";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter
+        basename={
+          import.meta.env.VITE_GITHUB_PAGES === "true" ? "/foundation/" : "/"
+        }
+      >
         <App />
       </BrowserRouter>
     </Provider>
