@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: foundation
+    container_name: foundation-dev
     ports:
       - "5173:5173"
     volumes:
