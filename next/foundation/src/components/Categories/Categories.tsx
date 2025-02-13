@@ -5,33 +5,27 @@ import clsx from "clsx";
 import { useState } from "react";
 import { Button } from "../Button/Button";
 import Link from "next/link";
+import { useCategoryStore } from "@/stores/categories-store";
 
 export default function Categories() {
   const [inputValue, setInputValue] = useState("");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const [categories, setCategories] = useState([
-    { id: 0, name: "Sport" },
-    { id: 1, name: "Study" },
-    { id: 2, name: "Sleep" },
-  ]);
+  const { categories, addCategory } = useCategoryStore();
 
   const buttonHandler = () => {
     if (inputValue === "") return;
 
-    setCategories([
-      ...categories,
-      { id: Number(Date.now()), name: inputValue },
-    ]);
+    addCategory(inputValue);
 
     setInputValue("");
   };
 
   return (
-    <>
+    <section>
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="sm:collapse fixed top-0 z-2 block h-full bg-[rgb(209, 209, 209)] border-none rounded-r-xl"
+        className="sm:collapse fixed top-0 z-2 block h-full bg-neutral-200 border-none rounded-r-3xl px-1"
       >
         <ArrowForwardIosIcon
           className={clsx("rotate-0 duration-3", isMobileOpen && "rotate-180")}
@@ -39,9 +33,12 @@ export default function Categories() {
       </button>
       <div
         className={clsx(
-          "md:max-sm:fixed md:max-sm:top-0 md:max-sm:left-0 md:max-sm:translate-x-[-300px]",
-          "h-full m-0 p-5 bg-gray-100 first-line:rounded-r-xl overflow-y-auto duration-3 transition-transform",
-          isMobileOpen && "w-full pl-12 opacity-100 translate-x-0 z-1"
+          {
+            ["fixed translate-x-0 w-full opacity-100 z-10"]: isMobileOpen,
+            ["absolute translate-x-[-400px]"]: !isMobileOpen,
+          },
+          "sm:translate-x-0 sm:relative",
+          "h-full m-0 p-5 bg-gray-100 rounded-r-3xl overflow-y-auto duration-3 transition-transform"
         )}
       >
         <input
@@ -68,7 +65,7 @@ export default function Categories() {
             >
               <Link
                 onClick={() => setIsMobileOpen(false)}
-                href={`/objectives/${category.name}`}
+                href={`/${category.name}`}
               >
                 {category.name}
               </Link>
@@ -76,6 +73,6 @@ export default function Categories() {
           ))}
         </ul>
       </div>
-    </>
+    </section>
   );
 }
