@@ -1,8 +1,24 @@
-import { render, screen } from "@testing-library/react";
-import { Objective } from "./Objective";
-import * as hooks from "../../hooks";
-import * as actions from "../Objectives/ObjectivesSlice";
+import "@testing-library/jest-dom";
+import { act, render, screen } from "@testing-library/react";
+import Objective from "./Objective";
 import userEvent from "@testing-library/user-event";
+import { useObjectiveStore } from "../../stores/objectives-store";
+
+jest.mock("../../stores/objectives-store", () => ({
+  useObjectiveStore: jest.fn(),
+}));
+
+const mockedUseObjectiveStore = jest.mocked(useObjectiveStore);
+
+const removeObjectiveMock = jest.fn();
+const editDayObjectiveMock = jest.fn();
+const editTextObjectiveMock = jest.fn();
+
+mockedUseObjectiveStore.mockImplementation(() => ({
+  editDayObjective: editDayObjectiveMock,
+  editTextObjective: editTextObjectiveMock,
+  removeObjective: removeObjectiveMock,
+}));
 
 const objective = {
   id: 0,
@@ -21,84 +37,69 @@ const objective = {
   ],
 };
 
-const mockedDispatch = jest.fn();
-
-jest.spyOn(hooks, "useAppDispatch").mockImplementation(() => mockedDispatch);
-const mockedSelector = jest
-  .spyOn(hooks, "useAppSelector")
-  .mockImplementation(() => {
-    return objective;
-  });
-
-const deleteObjective = jest.fn();
-
 describe("Objective", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   test("should work editing and save", async () => {
-    const mockedEditObjective = jest.spyOn(actions, "editObjective");
-
     const user = userEvent.setup();
 
-    render(
-      <Objective deleteObjective={deleteObjective} index={objective.id} />
-    );
+    render(<Objective objective={objective} />);
 
     const editButton = screen.getByRole("button", { name: "edit button" });
 
-    await user.click(editButton);
+    await act(async () => {
+      await user.click(editButton);
+    });
 
     const textarea = screen.getByRole("textbox", { name: "edit area" });
 
     const inputText = " hello world!";
 
-    await user.type(textarea, inputText);
+    await act(async () => {
+      await user.type(textarea, inputText);
+      await user.click(editButton);
+    });
 
-    await user.click(editButton);
-
-    const savedText = screen.getByRole("paragraph");
+    const savedText = await screen.findByRole("paragraph");
 
     expect(savedText.textContent).toBe(objective.text + inputText);
-    expect(mockedDispatch).toHaveBeenCalledTimes(1);
-    expect(mockedEditObjective).toHaveBeenCalledTimes(1);
+
+    expect(editTextObjectiveMock).toHaveBeenCalledTimes(1);
+    expect(editTextObjectiveMock).toHaveBeenCalledWith(
+      objective.id,
+      objective.text + inputText
+    );
   });
 
   test("should be removed", async () => {
     const user = userEvent.setup();
 
-    render(
-      <Objective deleteObjective={deleteObjective} index={objective.id} />
-    );
+    render(<Objective objective={objective} />);
 
     const deleteButton = screen.getByRole("button", { name: "delete button" });
 
     await user.click(deleteButton);
 
-    expect(deleteObjective).toHaveBeenCalledTimes(1);
-    expect(deleteObjective).toHaveBeenCalledWith(objective.id);
+    expect(removeObjectiveMock).toHaveBeenCalledTimes(1);
+    expect(removeObjectiveMock).toHaveBeenCalledWith(objective.id);
   });
 
   test("should change the checkboxes", async () => {
-    const mockedAddObjectiveValue = jest.spyOn(actions, "addObjectiveValue");
-
     const user = userEvent.setup();
 
-    render(
-      <Objective deleteObjective={deleteObjective} index={objective.id} />
-    );
+    render(<Objective objective={objective} />);
 
     const dayInput = screen.getByRole("checkbox", { name: "1 day" });
 
     await user.click(dayInput);
 
-    expect(mockedDispatch).toHaveBeenCalledTimes(1);
-    expect(mockedAddObjectiveValue).toHaveBeenCalledTimes(1);
-    expect(mockedAddObjectiveValue).toHaveBeenCalledWith({
-      objectiveId: objective.id,
-      checkboxId: objective.objectiveValues[0].id,
-    });
+    expect(editDayObjectiveMock).toHaveBeenCalledTimes(1);
+    expect(editDayObjectiveMock).toHaveBeenCalledWith(
+      objective.id,
+      objective.objectiveValues[0].id
+    );
   });
 
   test("should become executed", async () => {
@@ -119,11 +120,7 @@ describe("Objective", () => {
       ],
     };
 
-    mockedSelector.mockImplementation(() => completedObjective);
-
-    render(
-      <Objective deleteObjective={deleteObjective} index={objective.id} />
-    );
+    render(<Objective objective={completedObjective} />);
 
     const completedText = screen.getByRole("paragraph", {
       name: "completed text",
