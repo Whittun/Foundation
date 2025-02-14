@@ -53,7 +53,7 @@ export default function Objectives() {
       <form className={"flex flex-col gap-5"}>
         <textarea
           className={
-            "h-36 p-5 resize-none rounded-2xl border-2 border-neutral-700 border-solid"
+            "h-36 p-5 resize-none rounded-2xl border-2 border-gray-400 border-solid"
           }
           value={areaValue}
           onChange={(e) => setAreaValue(e.target.value)}
