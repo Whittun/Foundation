@@ -21,8 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(interFont.className, "h-screen")}>
-        <div className="flex h-full justify-normal sm:justify-between">
+      <body className={clsx(interFont.className, "min-h-screen")}>
+        <div className="flex justify-normal sm:justify-between items-stretch min-h-screen">
           <Categories />
           {children}
         </div>

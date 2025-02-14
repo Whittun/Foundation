@@ -22,10 +22,10 @@ export default function Categories() {
   };
 
   return (
-    <section>
+    <section className="flex">
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="sm:collapse fixed top-0 z-2 block h-full bg-neutral-200 border-none rounded-r-3xl px-1"
+        className="sm:collapse fixed top-0 z-2 block h-screen bg-neutral-200 border-none rounded-r-3xl px-1"
       >
         <ArrowForwardIosIcon
           className={clsx("rotate-0 duration-3", isMobileOpen && "rotate-180")}
@@ -34,11 +34,11 @@ export default function Categories() {
       <div
         className={clsx(
           {
-            ["fixed translate-x-0 w-full opacity-100 z-10"]: isMobileOpen,
+            ["fixed translate-x-0 w-full h-full opacity-100 z-10"]: isMobileOpen,
             ["absolute translate-x-[-400px]"]: !isMobileOpen,
           },
           "sm:translate-x-0 sm:relative",
-          "h-full m-0 p-5 bg-gray-100 rounded-r-3xl overflow-y-auto duration-3 transition-transform"
+          "flex flex-col grow m-0 p-5 bg-gray-100 rounded-r-3xl overflow-y-auto duration-3 transition-transform"
         )}
       >
         <input
