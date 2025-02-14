@@ -60,7 +60,9 @@ export default function Objective({ objective }: Props) {
         <DeleteForeverIcon />
       </button>
       {!editing ? (
-        <p className={clsx(isCompleted && "opacity-30")}>{objectiveText}</p>
+        <p className={clsx(isCompleted && "opacity-30", "mt-5")}>
+          {objectiveText}
+        </p>
       ) : (
         <textarea
           className={
