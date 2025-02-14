@@ -1,21 +1,14 @@
+import "@testing-library/jest-dom";
+
 import { render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router";
-import { store } from "../../store/store";
-import { Categories } from "./Categories";
+import Categories from "./Categories";
 import userEvent from "@testing-library/user-event";
 
 describe("Categories", () => {
   test("Categories are created correctly", async () => {
     const user = userEvent.setup();
 
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Categories />
-        </MemoryRouter>
-      </Provider>
-    );
+    render(<Categories />);
 
     const input = screen.getByRole("textbox", { name: /enter name/i });
     const button = screen.getByRole("button", { name: /add category/i });
