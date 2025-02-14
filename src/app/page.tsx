@@ -1,3 +1,7 @@
 export default function Home() {
-  return <main>Create a category and a first goal!</main>;
+  return (
+    <main className="flex justify-center items-center grow">
+      Create a category and a first goal!
+    </main>
+  );
 }
