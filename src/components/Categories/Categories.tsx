@@ -34,7 +34,8 @@ export default function Categories() {
       <div
         className={clsx(
           {
-            ["fixed translate-x-0 w-full h-full opacity-100 z-10"]: isMobileOpen,
+            ["fixed translate-x-0 w-full h-full opacity-100 z-10"]:
+              isMobileOpen,
             ["absolute translate-x-[-400px]"]: !isMobileOpen,
           },
           "sm:translate-x-0 sm:relative",
@@ -76,3 +77,4 @@ export default function Categories() {
     </section>
   );
 }
+  
