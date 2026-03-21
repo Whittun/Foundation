@@ -1,0 +1,27 @@
+.year {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.month {
+  display: flex;
+  max-width: 230px;
+  flex-wrap: wrap;
+}
+
+.monthName {
+  width: 100%;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  margin: 2px;
+
+  font-size: 12px;
+
+  border: 1px solid gray;
+}
