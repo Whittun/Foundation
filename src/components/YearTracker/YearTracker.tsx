@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './YearTracker.module.css';
 import { RatingPicker } from '../RatingPicker/RatingPicker';
+import { clsx } from 'clsx';
 
 type YearMap = Record<string, number | null>;
 type CalendarDay = string | null;
@@ -48,7 +49,7 @@ const monthsNames = [
 
 export const YearTracker = () => {
   const [yearMap, setYearMap] = React.useState<YearMap>(getYearMap(2026));
-  const [dateForPicker, setDateForPicker] = React.useState<string>('');
+  const [dateForPicker, setDateForPicker] = React.useState<string | null>(null);
 
   const popoverRef = React.useRef<HTMLDivElement>(null);
 
@@ -71,9 +72,9 @@ export const YearTracker = () => {
     months[numIndexMonth].push(date);
   })
 
-  const ratingHandler = (date: string) => {
+  const showPickerHandler = (date: string) => {
     if (date === dateForPicker) {
-      setDateForPicker('');
+      setDateForPicker(null);
       return;
     }
 
@@ -81,7 +82,7 @@ export const YearTracker = () => {
   }
 
   React.useEffect(() => {
-    const handleClick = (event: PointerEvent) => {
+    const handleClick = (event: MouseEvent) => {
       const popoverRefCurrent = popoverRef.current;
       const eventTarget = event.target;
 
@@ -93,8 +94,8 @@ export const YearTracker = () => {
         return; 
       }
 
-      if (!(popoverRefCurrent.contains(eventTarget)) && dateForPicker !== '') {
-        setDateForPicker('');
+      if (!(popoverRefCurrent.contains(eventTarget)) && dateForPicker !== null) {
+        setDateForPicker(null);
       }
     }
 
@@ -103,27 +104,37 @@ export const YearTracker = () => {
     return () => document.removeEventListener('click', handleClick);
   }, [dateForPicker]);
 
+  const handlePickRating = (ratingVariant: number) => {
+    if (dateForPicker === null) return;
+
+    setYearMap((previousMap) => {
+      const newYearMap = {...previousMap};
+      newYearMap[dateForPicker] = ratingVariant;
+      return newYearMap;
+    });
+  }
+
   return <div className={s.year}>{months.map((month, index) => {
 
     return (
-      <div className={s.month}>
+      <div key={monthsNames[index]} className={s.month}>
         <h2 className={s.monthName}>{monthsNames[index]}</h2>
-        {month.map((date) => {
+        {month.map((date, index) => {
           if (date === null) {
-            return <p className={s.day}>
+            return <p key={index} className={s.day}>
               <span></span>
             </p>
           }
 
           const [year, month, day] = date.split('-');
 
-          return <div className={s.day} 
-          onClick={(event) => {
-            event.stopPropagation();
-            ratingHandler(date)
-          }}>
-              {dateForPicker === date && <div ref={popoverRef}><RatingPicker/></div>}
-              <span>{day}</span>
+          return <div key={date} className={clsx(s.day, yearMap[date] !== null && s[`rating-${yearMap[date]}`])}
+            onClick={(event) => {
+              event.stopPropagation();
+              showPickerHandler(date)
+            }}>
+            {dateForPicker === date && <div ref={popoverRef}><RatingPicker onClick={handlePickRating}/></div>}
+            <span>{day}</span>
           </div>
         })}
       </div>  

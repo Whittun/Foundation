@@ -1,11 +1,15 @@
 import s from './RatingPicker.module.css';
 
-export const RatingPicker = () => {
+type RatingPickerProps = {
+  onClick: (ratingVariant: number) => void;
+}
+
+export const RatingPicker = ({ onClick }: RatingPickerProps) => {
+  const ratingVariants = [1, 2, 3, 4, 5];
+
   return <div className={s.root}>
-    <div className={s.ratingNumber}>1</div>
-    <div className={s.ratingNumber}>2</div>
-    <div className={s.ratingNumber}>3</div>
-    <div className={s.ratingNumber}>4</div>
-    <div className={s.ratingNumber}>5</div>
+    {ratingVariants.map((ratingVariant) => {
+      return <div key={ratingVariant} onClick={() => onClick(ratingVariant)} className={s.ratingNumber}>{ratingVariant}</div>
+    })}
   </div>
 }
