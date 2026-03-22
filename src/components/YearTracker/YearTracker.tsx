@@ -117,7 +117,8 @@ export const YearTracker = () => {
 
           const [year, month, day] = date.split('-');
 
-          return <div className={s.day} onClick={(event) => {
+          return <div className={s.day} 
+          onClick={(event) => {
             event.stopPropagation();
             ratingHandler(date)
           }}>
