@@ -2,6 +2,7 @@ import React from 'react';
 import s from './YearTracker.module.css';
 import { RatingPicker } from '../RatingPicker/RatingPicker';
 import { clsx } from 'clsx';
+import { useGetYearRatingsQuery } from '../../api/dayRatingsApi';
 
 type YearMap = Record<string, number | null>;
 type CalendarDay = string | null;
@@ -48,12 +49,17 @@ const monthsNames = [
 ] as const;
 
 export const YearTracker = () => {
+  const { data, isLoading, error,} = useGetYearRatingsQuery(2026);
+
+  console.log(data, 'data!')
+
   const [yearMap, setYearMap] = React.useState<YearMap>(getYearMap(2026));
+
   const [dateForPicker, setDateForPicker] = React.useState<string | null>(null);
 
   const popoverRef = React.useRef<HTMLDivElement>(null);
 
-  const dates = Object.keys(yearMap);
+  const dates = Object.keys(data);
 
   const months: Months = Array.from({length: 12}).map(() => []);
 
