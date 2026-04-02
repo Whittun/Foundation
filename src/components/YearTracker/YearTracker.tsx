@@ -25,11 +25,11 @@ const monthsNames = [
 ] as const;
 
 export const YearTracker = () => {
-  const { data, isLoading, isError } = useGetYearRatingsQuery(2026);
+  const [currentYear, setCurrentYear] = React.useState(new Date().getFullYear());
+
+  const { data, isLoading, isError } = useGetYearRatingsQuery(currentYear);
   const [ setDayRating ] = useSetDayRatingMutation();
   const [ deleteDayRating ] = useDeleteDayRatingMutation();
-
-  // const [yearMap, setYearMap] = React.useState<YearMap>(getYearMap(2026));
 
   const [dateForPicker, setDateForPicker] = React.useState<string | null>(null);
 
@@ -113,30 +113,56 @@ export const YearTracker = () => {
     deleteDayRating({date: dateForPicker});
   }
 
-  return <div className={s.year}>{months.map((month, index) => {
+  const handleYear = (direction: 'back' | 'next') => {
+    if (direction === 'next') {
+      setCurrentYear((prevYear) => {
+        return prevYear + 1;
+      })
+    }
 
-    return (
-      <div key={monthsNames[index]} className={s.month}>
-        <h2 className={s.monthName}>{monthsNames[index]}</h2>
-        {month.map((date, index) => {
-          if (date === null) {
-            return <p key={index} className={s.day}>
-              <span></span>
-            </p>
-          }
+    if (direction === 'back') {
+      setCurrentYear((prevYear) => {
+        return prevYear - 1;
+      })
+    }
+  }
 
-          const [year, month, day] = date.split('-');
+  return <React.Fragment>
+    <div className={s.yearPicker}>
+      <button onClick={() => handleYear('back')}>
+        prevYear
+      </button>
+      {currentYear} 
+      <button onClick={() => handleYear('next')}>
+        nextYear
+      </button>
+    </div>
+    <div className={s.year}>
+      {months.map((month, index) => {
+        return (
+          <div key={monthsNames[index]} className={s.month}>
+            <h2 className={s.monthName}>{monthsNames[index]}</h2>
+            {month.map((date, index) => {
+              if (date === null) {
+                return <p key={index} className={s.day}>
+                  <span></span>
+                </p>
+              }
 
-          return <div key={date} className={clsx(s.day, data[date] !== null && s[`rating-${data[date]}`])}
-            onClick={(event) => {
-              event.stopPropagation();
-              showPickerHandler(date)
-            }}>
-            {dateForPicker === date && <div ref={popoverRef}><RatingPicker removeRating={handleRemoveRating} addRating={handlePickRating}/></div>}
-            <span>{day}</span>
-          </div>
-        })}
-      </div>  
-    )
-  })}</div>;
+              const [year, month, day] = date.split('-');
+
+              return <div key={date} className={clsx(s.day, data[date] !== null && s[`rating-${data[date]}`])}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showPickerHandler(date)
+                }}>
+                {dateForPicker === date && <div ref={popoverRef}><RatingPicker removeRating={handleRemoveRating} addRating={handlePickRating}/></div>}
+                <span>{day}</span>
+              </div>
+            })}
+          </div>  
+        )
+      })}
+    </div>
+  </React.Fragment>
 };
