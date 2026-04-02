@@ -5,6 +5,9 @@ export const dayRatingsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3000',
   }),
+
+  tagTypes: ['YearRatings'],
+
   endpoints: (builder) => ({
     getYearRatings: builder.query({
       query: (year: number) => ({
@@ -13,8 +16,32 @@ export const dayRatingsApi = createApi({
           year,
         },
       }),
+
+      providesTags: ['YearRatings']
+    }),
+    setDayRating: builder.mutation({
+      query: ({date, rating}: {date: string; rating: number}) => ({
+        url: '/day-ratings',
+        method: 'PATCH',
+        body: {
+          date,
+          rating
+        },
+      }),
+
+      invalidatesTags: ['YearRatings']
+    }),
+    deleteDayRating: builder.mutation({
+      query: ({date}: {date: string}) => ({
+        url: '/day-ratings',
+        method: 'DELETE',
+        body: {
+          date
+        },
+      }),
+      invalidatesTags: ['YearRatings']
     }),
   }),
-}) 
+})
 
-export const { useGetYearRatingsQuery } = dayRatingsApi;
+export const { useGetYearRatingsQuery, useSetDayRatingMutation, useDeleteDayRatingMutation } = dayRatingsApi;
