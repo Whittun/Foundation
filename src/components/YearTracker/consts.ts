@@ -12,3 +12,13 @@ export const monthsNames = [
   'November',
   'December',
 ] as const;
+
+export const weekDays = [
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat',
+  'Sun',
+] as const;

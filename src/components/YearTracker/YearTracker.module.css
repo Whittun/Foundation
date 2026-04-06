@@ -1,16 +1,51 @@
 .year {
   display: flex;
   flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .month {
   display: flex;
-  max-width: 230px;
+  flex-direction: column;
+  max-width: 220px;
   flex-wrap: wrap;
+  padding: 10px;
+
+  background-color: var(--main-theme-color);
+  border-radius: 15px;
 }
 
 .monthName {
   width: 100%;
+  margin: 0;
+  margin-bottom: 10px;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.weekDays {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 5px;
+
+  font-size: 12px;
+}
+
+.weekDay {
+  display: flex;
+  width: 25px;
+  justify-content: center;
+
+  color: #ffffff;
+}
+
+.daysGreed {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .day {
@@ -21,34 +56,31 @@
   justify-content: center;
   width: 25px;
   height: 25px;
-  margin: 2px;
+  margin: 0;
 
-  font-size: 12px;
+  font-size: 14px;
+  color: #ffffff;
 
   cursor: pointer;
-  border: 1px solid gray;
   border-radius: 4px;
 }
 
 .rating-1 {
-  background-color: tomato;
+  background: var(--rating-1);  
 }
 
 .rating-2 {
-  background-color: rgb(255, 141, 71);
+  background: var(--rating-2); 
 }
-
 
 .rating-3 {
-  background-color: rgb(253, 203, 2);
+  background: var(--rating-3); 
 }
-
 
 .rating-4 {
-  background-color: rgb(210, 255, 8);
+  background: var(--rating-4); 
 }
 
-
 .rating-5 {
-  background-color: rgb(45, 199, 22);
+  background: var(--rating-5); 
 }

@@ -8,8 +8,8 @@
   padding: 5px;
   gap: 5px;
 
-  background: #ffffff;
-  border: 1px solid gray;
+  background: var(--main-theme-color);
+  border: 1px solid rgb(255, 255, 255);
   border-radius: 4px;
 }
 
@@ -20,6 +20,25 @@
   width: 20px;
   height: 20px;
   
-  border: 1px solid gray;
   border-radius: 50%;
+}
+
+.ratingNumber-1 {
+  background-color: var(--rating-1);
+}
+
+.ratingNumber-2 {
+  background-color: var(--rating-2);
+}
+
+.ratingNumber-3 {
+  background-color: var(--rating-3);
+}
+
+.ratingNumber-4 {
+  background-color: var(--rating-4);
+}
+
+.ratingNumber-5 {
+  background-color: var(--rating-5);
 }

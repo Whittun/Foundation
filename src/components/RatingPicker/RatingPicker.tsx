@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { DayRating } from '../../types/dayRatingsTypes';
 import s from './RatingPicker.module.css';
 
@@ -11,7 +12,7 @@ export const RatingPicker = ({ addRating, removeRating }: RatingPickerProps) => 
 
   return <div className={s.root}>
     {ratingVariants.map((ratingVariant) => {
-      return <div key={ratingVariant} onClick={() => addRating(ratingVariant)} className={s.ratingNumber}>{ratingVariant}</div>
+      return <div key={ratingVariant} onClick={() => addRating(ratingVariant)} className={clsx(s.ratingNumber, s['ratingNumber-' + ratingVariant])}>{ratingVariant}</div>
     })}
     <button onClick={removeRating}>
       clear

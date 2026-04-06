@@ -1,4 +1,5 @@
 import "./App.css";
+import "./variables.css";
 
 import * as React from "react";
 import { YearTracker } from "./components/YearTracker";

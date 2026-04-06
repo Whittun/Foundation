@@ -3,7 +3,7 @@ import s from './YearTracker.module.css';
 import { RatingPicker } from '../RatingPicker';
 import { clsx } from 'clsx';
 import { useDeleteDayRatingMutation, useGetYearRatingsQuery, useSetDayRatingMutation } from '../../api/dayRatingsApi';
-import { monthsNames } from './consts';
+import { monthsNames, weekDays } from './consts';
 import { getCalendarMonths } from './getCalendarMonths';
 import type { DayRating } from '../../types/dayRatingsTypes';
 
@@ -108,7 +108,13 @@ export const YearTracker = () => {
         return (
           <div key={monthsNames[index]} className={s.month}>
             <h2 className={s.monthName}>{monthsNames[index]}</h2>
-            {month.map((date, index) => {
+            <div className={s.weekDays}>
+              {weekDays.map((weekDay) => {
+                return <div className={s.weekDay}>{weekDay}</div>
+              })}
+            </div>
+            <div className={s.daysGreed}>
+               {month.map((date, index) => {
               if (date === null) {
                 return <div key={index} className={s.day}>
                   <span></span>
@@ -126,6 +132,7 @@ export const YearTracker = () => {
                 <span>{day}</span>
               </div>
             })}
+            </div>
           </div>  
         )
       })}
