@@ -1,14 +1,18 @@
 import "./App.css";
 import "./variables.css";
 
-import * as React from "react";
-import { YearTracker } from "./components/YearTracker";
+import { Route, Routes } from "react-router-dom";
+import { YearTrackerPage } from "./pages/YearTrackerPage";
+import { AppLayout } from "./layout";
 
 function App() {
   return (
-    <React.Fragment>
-      <YearTracker />
-    </React.Fragment>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={'Main Page!'} />
+        <Route path="/yearTracker" element={<YearTrackerPage />} />
+      </Route>
+    </Routes>
   );
 }
 

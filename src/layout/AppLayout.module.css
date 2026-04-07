@@ -1,0 +1,11 @@
+.root {
+  display: flex;
+  gap: 15px;
+}
+
+.aside {
+  position: sticky;
+  top: 15px;
+
+  align-self: flex-start;
+}
