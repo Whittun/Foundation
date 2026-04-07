@@ -6,6 +6,7 @@ import { useDeleteDayRatingMutation, useGetYearRatingsQuery, useSetDayRatingMuta
 import { monthsNames, weekDays } from './consts';
 import { getCalendarMonths } from './getCalendarMonths';
 import type { DayRating } from '../../types/dayRatingsTypes';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const YearTracker = () => {
   const [currentYear, setCurrentYear] = React.useState(new Date().getFullYear());
@@ -95,12 +96,12 @@ export const YearTracker = () => {
 
   return <React.Fragment>
     <div className={s.yearPicker}>
-      <button onClick={() => handleCurrentYear('back')}>
-        prevYear
+      <button className={s.yearControl} onClick={() => handleCurrentYear('back')}>
+        <ChevronLeft />
       </button>
       {currentYear} 
-      <button onClick={() => handleCurrentYear('next')}>
-        nextYear
+      <button className={s.yearControl} onClick={() => handleCurrentYear('next')}>
+        <ChevronRight />
       </button>
     </div>
     <div className={s.year}>
@@ -116,7 +117,7 @@ export const YearTracker = () => {
             <div className={s.daysGreed}>
                {month.map((date, index) => {
               if (date === null) {
-                return <div key={index} className={s.day}>
+                return <div key={index} className={clsx(s.day, s.emptyDay)}>
                   <span></span>
                 </div>
               }

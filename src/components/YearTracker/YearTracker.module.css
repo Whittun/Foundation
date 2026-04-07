@@ -5,10 +5,37 @@
   margin-top: 20px;
 }
 
+.yearPicker {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 4px;
+
+  font-size: 19px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.yearControl {
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s all;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--main-theme-background) 90%, black);
+  }
+}
+
 .month {
   display: flex;
   flex-direction: column;
-  max-width: 220px;
   flex-wrap: wrap;
   padding: 10px;
 
@@ -43,7 +70,8 @@
 }
 
 .daysGreed {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   flex-wrap: wrap;
   gap: 4px;
 }
@@ -63,24 +91,54 @@
 
   cursor: pointer;
   border-radius: 4px;
+
+  transition: 0.2s all;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--main-theme-color) 90%, black);
+  }
+}
+
+.emptyDay {
+  pointer-events: none;
 }
 
 .rating-1 {
   background: var(--rating-1);  
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--rating-1) 90%, black);
+  }
 }
 
 .rating-2 {
   background: var(--rating-2); 
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--rating-2) 90%, black);
+  }
 }
 
 .rating-3 {
-  background: var(--rating-3); 
+  background: var(--rating-3);   
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--rating-3) 90%, black);
+  }
 }
 
 .rating-4 {
   background: var(--rating-4); 
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--rating-4) 90%, black);
+  }
 }
 
 .rating-5 {
   background: var(--rating-5); 
+    
+  &:hover {
+    background-color: color-mix(in srgb, var(--rating-5) 90%, black);
+  }
 }

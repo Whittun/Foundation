@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import type { DayRating } from '../../types/dayRatingsTypes';
 import s from './RatingPicker.module.css';
+import { Eraser } from 'lucide-react';
 
 type RatingPickerProps = {
   addRating: (ratingVariant: DayRating) => void;
@@ -14,8 +15,8 @@ export const RatingPicker = ({ addRating, removeRating }: RatingPickerProps) => 
     {ratingVariants.map((ratingVariant) => {
       return <div key={ratingVariant} onClick={() => addRating(ratingVariant)} className={clsx(s.ratingNumber, s['ratingNumber-' + ratingVariant])}>{ratingVariant}</div>
     })}
-    <button onClick={removeRating}>
-      clear
+    <button className={s.clearButton} onClick={removeRating}>
+      <Eraser />
     </button>
   </div>
 }

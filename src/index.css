@@ -2,4 +2,6 @@
 
 body {
     font-family: 'Nunito', sans-serif;
+
+    background-color: var(--main-theme-background);
 }
