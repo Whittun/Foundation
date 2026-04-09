@@ -7,7 +7,7 @@ export const AppLayout = () => {
     <aside className={s.aside}>
       <AppMenu />
     </aside>
-    <main>
+    <main className={s.mainContent}>
       <Outlet />
     </main>
   </div>

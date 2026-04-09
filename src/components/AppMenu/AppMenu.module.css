@@ -37,7 +37,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: color-mix(in srgb, var(--main-theme-color) 90%, black);
+    background-color: var(--accent-theme-color);
   }
 }
 
