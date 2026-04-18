@@ -104,7 +104,7 @@
 }
 
 .rating-1 {
-  background: var(--rating-1);  
+  background: var(--rating-1);
 
   &:hover {
     background-color: color-mix(in srgb, var(--rating-1) 90%, black);
@@ -112,7 +112,7 @@
 }
 
 .rating-2 {
-  background: var(--rating-2); 
+  background: var(--rating-2);
 
   &:hover {
     background-color: color-mix(in srgb, var(--rating-2) 90%, black);
@@ -120,7 +120,7 @@
 }
 
 .rating-3 {
-  background: var(--rating-3);   
+  background: var(--rating-3);
 
   &:hover {
     background-color: color-mix(in srgb, var(--rating-3) 90%, black);
@@ -128,7 +128,7 @@
 }
 
 .rating-4 {
-  background: var(--rating-4); 
+  background: var(--rating-4);
 
   &:hover {
     background-color: color-mix(in srgb, var(--rating-4) 90%, black);
@@ -136,8 +136,8 @@
 }
 
 .rating-5 {
-  background: var(--rating-5); 
-    
+  background: var(--rating-5);
+
   &:hover {
     background-color: color-mix(in srgb, var(--rating-5) 90%, black);
   }

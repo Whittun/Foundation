@@ -1,10 +1,10 @@
-import "./App.css";
-import "./variables.css";
+import './App.css';
+import './variables.css';
 
-import { Route, Routes } from "react-router-dom";
-import { YearTrackerPage } from "./pages/YearTrackerPage";
-import { AppLayout } from "./layout";
-import { HabitsTrackerPage, HabitDetailsPage } from "./pages/HabitsTrackerPage";
+import { Route, Routes } from 'react-router-dom';
+import { YearTrackerPage } from './pages/YearTrackerPage';
+import { AppLayout } from './layout';
+import { HabitsTrackerPage, HabitDetailsPage } from './pages/HabitsTrackerPage';
 
 function App() {
   return (

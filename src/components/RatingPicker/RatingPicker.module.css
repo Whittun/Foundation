@@ -19,8 +19,8 @@
   align-items: center;
   width: 20px;
   height: 20px;
-  
-  border-radius: 50%;  
+
+  border-radius: 50%;
   transition: 0.2s all;
 }
 
@@ -87,6 +87,6 @@
   }
 
   &:hover {
-    background-color: var(--accent-theme-color)
+    background-color: var(--accent-theme-color);
   }
 }
