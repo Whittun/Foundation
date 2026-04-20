@@ -2,7 +2,11 @@ import React from 'react';
 import s from './YearTracker.module.css';
 import { RatingPicker } from '../RatingPicker';
 import { clsx } from 'clsx';
-import { useDeleteDayRatingMutation, useGetYearRatingsQuery, useSetDayRatingMutation } from '../../api/dayRatingsApi';
+import {
+  useDeleteDayRatingMutation,
+  useGetYearRatingsQuery,
+  useSetDayRatingMutation,
+} from '../../api/dayRatingsApi';
 import { monthsNames, weekDays } from './consts';
 import { getCalendarMonths } from './getCalendarMonths';
 import type { DayRating } from '../../types/dayRatingsTypes';
@@ -138,7 +142,10 @@ export const YearTracker = () => {
                     >
                       {activeDate === date && (
                         <div ref={popoverRef}>
-                          <RatingPicker removeRating={handleRemoveRating} addRating={handlePickRating} />
+                          <RatingPicker
+                            removeRating={handleRemoveRating}
+                            addRating={handlePickRating}
+                          />
                         </div>
                       )}
                       <span>{day}</span>

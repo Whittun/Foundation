@@ -15,7 +15,11 @@ export const RatingPicker = ({ addRating, removeRating }: RatingPickerProps) => 
     <div className={s.root}>
       {ratingVariants.map((ratingVariant) => {
         return (
-          <div key={ratingVariant} onClick={() => addRating(ratingVariant)} className={clsx(s.ratingNumber, s['ratingNumber-' + ratingVariant])}>
+          <div
+            key={ratingVariant}
+            onClick={() => addRating(ratingVariant)}
+            className={clsx(s.ratingNumber, s['ratingNumber-' + ratingVariant])}
+          >
             {ratingVariant}
           </div>
         );

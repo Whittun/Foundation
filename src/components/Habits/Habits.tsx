@@ -1,7 +1,6 @@
-import s from './HabitsTrackerPage.module.css';
 import clsx from 'clsx';
+import s from './Habits.module.css';
 import { Check, Plus } from 'lucide-react';
-import React from 'react';
 
 export const habitLevelsMock = [
   {
@@ -66,14 +65,9 @@ export const habitLevelsMock = [
   },
 ];
 
-export const HabitDetailsPage = () => {
-  // const { habitId } = useParams();
-
-  const [isCreate, setIsCreate] = React.useState(false);
-
+export const Habits = () => {
   return (
     <div className={s.detailRoot}>
-      {/* <p>Page of habit: {habitId}</p> */}
       {habitLevelsMock.map((habitLevel) => {
         const isCompleted = habitLevel.target === habitLevel.progress;
 
@@ -93,7 +87,10 @@ export const HabitDetailsPage = () => {
             <p className={s.description}>{habitLevel.description}</p>
             <div className={s.progressCircles}>
               {Array.from({ length: habitLevel.target }, (_, i) => (
-                <div key={`${habitLevel.id}-${i}`} className={clsx(s.progressCircle, habitLevel.progress > i && s.completedCircle)}></div>
+                <div
+                  key={`${habitLevel.id}-${i}`}
+                  className={clsx(s.progressCircle, habitLevel.progress > i && s.completedCircle)}
+                ></div>
               ))}
             </div>
             <div className={s.numProgressWrap}>

@@ -14,7 +14,7 @@ export const AppMenu = () => {
           </NavLink>
         </li>
         <li className={s.linksItem}>
-          <NavLink className={s.link} to="/habitsTracker">
+          <NavLink className={s.link} to="/habits">
             <ChartNoAxesColumnIncreasing className={s.icon} />
             Habits Tracker
           </NavLink>

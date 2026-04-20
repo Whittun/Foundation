@@ -4,7 +4,9 @@ import './variables.css';
 import { Route, Routes } from 'react-router-dom';
 import { YearTrackerPage } from './pages/YearTrackerPage';
 import { AppLayout } from './layout';
-import { HabitsTrackerPage, HabitDetailsPage } from './pages/HabitsTrackerPage';
+import { Habits } from './components/Habits';
+import { HabitsPage } from './pages/HabitsPage';
+import { EmptyHabits } from './components/emptyHabits';
 
 function App() {
   return (
@@ -12,9 +14,9 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path="/" element={'Main Page!'} />
         <Route path="/yearTracker" element={<YearTrackerPage />} />
-        <Route path="/habitsTracker" element={<HabitsTrackerPage />}>
-          <Route index element={<div>choose or create habit</div>} />
-          <Route path=":habitId" element={<HabitDetailsPage />} />
+        <Route path="/habits" element={<HabitsPage />}>
+          <Route index element={<EmptyHabits />} />
+          <Route path=":habitId" element={<Habits />} />
         </Route>
       </Route>
     </Routes>

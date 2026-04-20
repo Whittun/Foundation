@@ -45,4 +45,5 @@ export const dayRatingsApi = createApi({
   }),
 });
 
-export const { useGetYearRatingsQuery, useSetDayRatingMutation, useDeleteDayRatingMutation } = dayRatingsApi;
+export const { useGetYearRatingsQuery, useSetDayRatingMutation, useDeleteDayRatingMutation } =
+  dayRatingsApi;
