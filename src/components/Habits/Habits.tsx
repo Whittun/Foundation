@@ -10,12 +10,19 @@ import {
 import { useParams } from 'react-router-dom';
 import React from 'react';
 import type { UpdateHabitLevelArgs } from '../../types/habitsTypes';
+import { HabitLevelForm } from './components/HabitLevelForm';
+
+export type DraftInputsValues = {
+  levelValue: undefined | number;
+  descriptionValue: string;
+  targetValue: undefined | number;
+};
 
 export const Habits = () => {
-  const [isActiveCreate, setIsActiveCreate] = React.useState(false);
-  const [level, setLevel] = React.useState<number>();
-  const [description, setDescription] = React.useState('');
-  const [target, setTarget] = React.useState<number>();
+  const [habitLevelFormState, setHabitLevelFormState] = React.useState<{
+    type: string;
+    id?: number;
+  } | null>();
 
   const { habitId } = useParams();
 
@@ -27,16 +34,55 @@ export const Habits = () => {
   const [deleteHabitLevel] = useDeleteHabitLevelMutation();
 
   const createOpenHandler = () => {
-    setIsActiveCreate(true);
+    setHabitLevelFormState({ type: 'create' });
   };
 
-  const createHabitLevelHandler = () => {
-    if (!level || !target || !description || !numericHabitId) {
+  const cancelHandler = () => {
+    setHabitLevelFormState(null);
+  };
+
+  const editHandler = (habitLevelId: number) => {
+    setHabitLevelFormState({ type: 'edit', id: habitLevelId });
+  };
+
+  const createHabitLevelHandler = (inputsValues: DraftInputsValues) => {
+    if (
+      !inputsValues.levelValue ||
+      !inputsValues.targetValue ||
+      !inputsValues.descriptionValue ||
+      !numericHabitId
+    ) {
       throw new Error('Habit args is missing');
     }
 
-    createHabitLevel({ level, description, target, habitId: numericHabitId });
-    setIsActiveCreate(false);
+    createHabitLevel({
+      level: inputsValues.levelValue,
+      description: inputsValues.descriptionValue,
+      target: inputsValues.targetValue,
+      habitId: numericHabitId,
+    });
+
+    setHabitLevelFormState(null);
+  };
+
+  const editHabitLevelHandler = (inputsValues: DraftInputsValues, habitLevelId: number) => {
+    if (
+      !inputsValues.levelValue ||
+      !inputsValues.targetValue ||
+      !inputsValues.descriptionValue ||
+      !numericHabitId
+    ) {
+      throw new Error('Habit args is missing');
+    }
+
+    updateHabitLevel({
+      habitLevelId: habitLevelId,
+      level: inputsValues.levelValue,
+      description: inputsValues.descriptionValue,
+      target: inputsValues.targetValue,
+    });
+
+    setHabitLevelFormState(null);
   };
 
   const updateHabitProgress = (updateArgs: UpdateHabitLevelArgs) => {
@@ -47,112 +93,114 @@ export const Habits = () => {
     deleteHabitLevel({ habitLevelId });
   };
 
-  const cancelHandler = () => {
-    setIsActiveCreate(false);
-  };
-
   return (
     <div className={s.detailRoot}>
       {data &&
         data.map((habitLevel) => {
           const isCompleted = habitLevel.target <= habitLevel.progress;
 
+          const isEdit =
+            habitLevelFormState &&
+            habitLevelFormState.type === 'edit' &&
+            habitLevel.id === habitLevelFormState.id;
+
           return (
             <div className={clsx(s.habitLevel, isCompleted && s.habitLevelCompleted)}>
-              <div className={s.upWrapper}>
-                <p className={s.habitLevelNumber}>lvl {habitLevel.level}</p>
-                <div className={s.controlButtons}>
-                  <button className={s.controlButton}>
-                    <SquarePen />
-                  </button>
-                  <button
-                    onClick={() => deleteHabitLevelHandler(habitLevel.id)}
-                    className={s.controlButton}
-                  >
-                    <Trash />
-                  </button>
-                </div>
-                {isCompleted && (
-                  <div className={s.completedText}>
-                    <div className={s.completedTextCircle}>
-                      <Check className={s.checkIcon} />
+              {!isEdit ? (
+                <React.Fragment>
+                  <div className={s.upWrapper}>
+                    <p className={s.habitLevelNumber}>lvl {habitLevel.level}</p>
+                    <div className={s.controlButtons}>
+                      <button
+                        onClick={() => editHandler(habitLevel.id)}
+                        className={s.controlButton}
+                      >
+                        <SquarePen />
+                      </button>
+                      <button
+                        onClick={() => deleteHabitLevelHandler(habitLevel.id)}
+                        className={s.controlButton}
+                      >
+                        <Trash />
+                      </button>
                     </div>
-                    Completed
+                    {isCompleted && (
+                      <div className={s.completedText}>
+                        <div className={s.completedTextCircle}>
+                          <Check className={s.checkIcon} />
+                        </div>
+                        Completed
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <p className={s.description}>{habitLevel.description}</p>
-              <div className={s.progressCircles}>
-                {Array.from({ length: habitLevel.target }, (_, i) => (
-                  <div
-                    key={`${habitLevel.id}-${i}`}
-                    className={clsx(s.progressCircle, habitLevel.progress > i && s.completedCircle)}
-                  ></div>
-                ))}
-              </div>
-              <div className={s.numProgressWrap}>
-                <p className={s.numProgress}>
-                  {habitLevel.progress} / {habitLevel.target}
-                </p>
-              </div>
-              <div className={s.changeButtons}>
-                <button
-                  onClick={() =>
-                    updateHabitProgress({
-                      habitLevelId: habitLevel.id,
-                      progress: habitLevel.progress - 1,
-                    })
+                  <p className={s.description}>{habitLevel.description}</p>
+                  <div className={s.progressCircles}>
+                    {Array.from({ length: habitLevel.target }, (_, i) => (
+                      <div
+                        key={`${habitLevel.id}-${i}`}
+                        className={clsx(
+                          s.progressCircle,
+                          habitLevel.progress > i && s.completedCircle,
+                        )}
+                      ></div>
+                    ))}
+                  </div>
+                  <div className={s.numProgressWrap}>
+                    <p className={s.numProgress}>
+                      {habitLevel.progress} / {habitLevel.target}
+                    </p>
+                  </div>
+                  <div className={s.changeButtons}>
+                    <button
+                      onClick={() =>
+                        updateHabitProgress({
+                          habitLevelId: habitLevel.id,
+                          progress: habitLevel.progress - 1,
+                        })
+                      }
+                      className={s.changeProgress}
+                    >
+                      -1
+                    </button>
+                    <button
+                      onClick={() =>
+                        updateHabitProgress({
+                          habitLevelId: habitLevel.id,
+                          progress: habitLevel.progress + 1,
+                        })
+                      }
+                      className={s.changeProgress}
+                    >
+                      +1
+                    </button>
+                  </div>{' '}
+                </React.Fragment>
+              ) : (
+                <HabitLevelForm
+                  cancelHandler={cancelHandler}
+                  habitLevelHandler={(inputsValues) =>
+                    editHabitLevelHandler(inputsValues, habitLevel.id)
                   }
-                  className={s.changeProgress}
-                >
-                  -1
-                </button>
-                <button
-                  onClick={() =>
-                    updateHabitProgress({
-                      habitLevelId: habitLevel.id,
-                      progress: habitLevel.progress + 1,
-                    })
-                  }
-                  className={s.changeProgress}
-                >
-                  +1
-                </button>
-              </div>
+                  initialValues={{
+                    levelValue: habitLevel.level,
+                    descriptionValue: habitLevel.description,
+                    targetValue: habitLevel.target,
+                  }}
+                />
+              )}
             </div>
           );
         })}
       <div className={clsx(s.habitLevel)}>
-        {!isActiveCreate ? (
+        {habitLevelFormState && habitLevelFormState.type === 'create' ? (
+          <HabitLevelForm
+            cancelHandler={cancelHandler}
+            habitLevelHandler={createHabitLevelHandler}
+          />
+        ) : (
           <button onClick={createOpenHandler} className={clsx(s.habitLevel, s.habitCreateLevel)}>
             <Plus />
           </button>
-        ) : (
-          <div className={s.createLevel}>
-            <p>
-              <label>level</label>
-              <input onChange={(event) => setLevel(Number(event.target.value))} type="number" />
-            </p>
-
-            <p>
-              <label htmlFor="">description</label>
-              <textarea onChange={(event) => setDescription(event.target.value)} />
-            </p>
-
-            <p>
-              <label htmlFor="">target</label>
-              <input onChange={(event) => setTarget(Number(event.target.value))} type="number" />
-            </p>
-
-            <div>
-              <button onClick={createHabitLevelHandler} className={s.createLevelButton}>
-                Save
-              </button>
-              <button onClick={cancelHandler} className={s.createLevelButton}>
-                cancel
-              </button>
-            </div>
-          </div>
         )}
       </div>
     </div>
