@@ -6,17 +6,20 @@ import type {
   UpdateHabitLevelArgs,
 } from '../types/habitsTypes';
 
-export const HabitsApi = createApi({
+export const habitsApi = createApi({
   reducerPath: 'habitsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3000/habits',
   }),
+
+  tagTypes: ['Habits', 'HabitLevels'],
 
   endpoints: (builder) => ({
     getAllHabits: builder.query<Habit[], void>({
       query: () => ({
         url: '',
       }),
+      providesTags: ['Habits'],
     }),
     updateHabit: builder.mutation<Habit, { habitId: number; name: string }>({
       query: ({ habitId, name }) => ({
@@ -35,6 +38,7 @@ export const HabitsApi = createApi({
           name,
         },
       }),
+      invalidatesTags: ['Habits'],
     }),
     deleteHabit: builder.mutation<{ deleted: boolean }, { habitId: number }>({
       query: ({ habitId }) => ({
@@ -46,6 +50,7 @@ export const HabitsApi = createApi({
       query: ({ habitId }) => ({
         url: `/${habitId}/levels`,
       }),
+      providesTags: ['HabitLevels'],
     }),
     updateHabitLevel: builder.mutation<HabitLevel, UpdateHabitLevelArgs>({
       query: ({ habitLevelId, ...body }) => ({
@@ -53,6 +58,7 @@ export const HabitsApi = createApi({
         method: 'PATCH',
         body,
       }),
+      invalidatesTags: ['HabitLevels'],
     }),
     createHabitLevel: builder.mutation<HabitLevel, CreateHabitLevelArgs>({
       query: ({ habitId, ...body }) => ({
@@ -60,6 +66,7 @@ export const HabitsApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['HabitLevels'],
     }),
 
     deleteHabitLevel: builder.mutation<{ deleted: boolean }, { habitLevelId: number }>({
@@ -67,6 +74,7 @@ export const HabitsApi = createApi({
         url: `/levels/${habitLevelId}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['HabitLevels'],
     }),
   }),
 });
@@ -80,4 +88,4 @@ export const {
   useUpdateHabitLevelMutation,
   useCreateHabitLevelMutation,
   useDeleteHabitLevelMutation,
-} = HabitsApi;
+} = habitsApi;

@@ -21,6 +21,7 @@ export type UpdateHabitLevelArgs = {
   level?: number;
   description?: string;
   target?: number;
+  progress?: number;
 };
 
 export type CreateHabitLevelArgs = {

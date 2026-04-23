@@ -6,7 +6,7 @@ import { YearTrackerPage } from './pages/YearTrackerPage';
 import { AppLayout } from './layout';
 import { Habits } from './components/Habits';
 import { HabitsPage } from './pages/HabitsPage';
-import { EmptyHabits } from './components/emptyHabits';
+import { EmptyHabits } from './components/EmptyHabits';
 
 function App() {
   return (

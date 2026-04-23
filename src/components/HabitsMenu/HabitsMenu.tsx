@@ -1,18 +1,35 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './HabitsMenu.module.css';
-
-const habitsMock = [
-  { id: 1, name: 'Sport' },
-  { id: 2, name: 'Study' },
-  { id: 3, name: 'Sleep' },
-];
+import { useCreateHabitMutation, useGetAllHabitsQuery } from '../../api/habitsApi';
+import clsx from 'clsx';
 
 export const HabitsMenu = () => {
   const [isShowForm, setIsShowForm] = React.useState(false);
+  const [name, setName] = React.useState('');
+  const [isActiveSave, setIsActiveSave] = React.useState(false);
+
+  const { data } = useGetAllHabitsQuery();
+  const [createHabit] = useCreateHabitMutation();
 
   const handleOpenForm = () => {
     setIsShowForm((prev) => !prev);
+  };
+
+  const handleInputName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setName(value);
+
+    if (value.trim().length < 5) {
+      setIsActiveSave(false);
+    } else {
+      setIsActiveSave(true);
+    }
+  };
+
+  const handleCreateHabit = (habitObj: { name: string }) => {
+    createHabit(habitObj);
+    setIsShowForm(false);
   };
 
   return (
@@ -22,22 +39,33 @@ export const HabitsMenu = () => {
       </button>
       {isShowForm && (
         <form className={s.createForm} action="">
-          <input className={s.inputName} placeholder="Habit name" type="text" />
-          <button className={s.createButton} type="button">
+          <input
+            onChange={handleInputName}
+            className={s.inputName}
+            placeholder="Habit name"
+            type="text"
+          />
+          <button
+            disabled={!isActiveSave}
+            onClick={() => handleCreateHabit({ name })}
+            className={clsx(s.createButton, { [s.disabledSave]: !isActiveSave })}
+            type="button"
+          >
             Save
           </button>
         </form>
       )}
       <ul className={s.linksList}>
-        {habitsMock.map((habit) => {
-          return (
-            <li className={s.linksItem}>
-              <NavLink className={s.link} to={`${habit.id}`}>
-                {habit.name}
-              </NavLink>
-            </li>
-          );
-        })}
+        {data &&
+          data.map((habit) => {
+            return (
+              <li key={habit.id} className={s.linksItem}>
+                <NavLink className={s.link} to={`${habit.id}`}>
+                  {habit.name}
+                </NavLink>
+              </li>
+            );
+          })}
       </ul>
     </section>
   );
