@@ -43,7 +43,6 @@
 .createCategory {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
 
   color: #ffffff;
   font-size: 16px;
@@ -100,4 +99,15 @@
 .disabledSave {
   opacity: 0.4;
   pointer-events: none;
+}
+
+.upButtonsWrapper {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.bottomButtonsWrapper {
+  display: flex;
+  margin-left: auto;
 }

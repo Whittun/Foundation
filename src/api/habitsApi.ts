@@ -29,6 +29,7 @@ export const habitsApi = createApi({
           name,
         },
       }),
+      invalidatesTags: ['Habits'],
     }),
     createHabit: builder.mutation<Habit, { name: string }>({
       query: ({ name }) => ({
@@ -45,6 +46,7 @@ export const habitsApi = createApi({
         url: `/${habitId}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['Habits'],
     }),
     getHabitLevelsByHabit: builder.query<HabitLevel[], { habitId: number }>({
       query: ({ habitId }) => ({
