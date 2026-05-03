@@ -23,9 +23,11 @@ export const HabitLevelForm = ({
 
   return (
     <div className={s.createLevel}>
-      <p>
-        <label>level</label>
+      <p className={s.inputWrapper}>
+        <label htmlFor="habit-level">level</label>
         <input
+          className={s.input}
+          id="habit-level"
           value={draftValues.levelValue}
           onChange={(event) =>
             setDraftValues((prev) => ({ ...prev, levelValue: Number(event.target.value) }))
@@ -34,9 +36,12 @@ export const HabitLevelForm = ({
         />
       </p>
 
-      <p>
-        <label htmlFor="">description</label>
+      <p className={s.inputWrapper}>
+        <label htmlFor="habit-description">description</label>
         <textarea
+          className={s.input}
+          rows={4}
+          id="habit-description"
           value={draftValues.descriptionValue}
           onChange={(event) =>
             setDraftValues((prev) => ({
@@ -47,9 +52,11 @@ export const HabitLevelForm = ({
         />
       </p>
 
-      <p>
-        <label htmlFor="">target</label>
+      <p className={s.inputWrapper}>
+        <label htmlFor="habit-target">target</label>
         <input
+          className={s.input}
+          id="habit-target"
           value={draftValues.targetValue}
           onChange={(event) =>
             setDraftValues((prev) => ({
@@ -61,12 +68,12 @@ export const HabitLevelForm = ({
         />
       </p>
 
-      <div>
+      <div className={s.buttonsWrapper}>
         <button onClick={() => habitLevelHandler(draftValues)} className={s.createLevelButton}>
           Save
         </button>
         <button onClick={cancelHandler} className={s.createLevelButton}>
-          cancel
+          Cancel
         </button>
       </div>
     </div>

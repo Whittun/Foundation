@@ -1,0 +1,35 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input {
+  padding: 8px;
+
+  font-family: 'Nunito', sans-serif;
+  color: #ffffff;
+
+  resize: none;
+  background-color: var(--accent-theme-color);
+  border: none;
+
+  border-radius: 8px;
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.createLevelButton {
+  padding: 8px;
+
+  color: #ffffff;
+  font-size: 14px;
+
+  background-color: var(--accent-theme-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

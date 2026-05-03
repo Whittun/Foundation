@@ -115,13 +115,13 @@ export const Habits = () => {
                         onClick={() => editHandler(habitLevel.id)}
                         className={s.controlButton}
                       >
-                        <SquarePen />
+                        <SquarePen className={s.controlButtonIcon} />
                       </button>
                       <button
                         onClick={() => deleteHabitLevelHandler(habitLevel.id)}
                         className={s.controlButton}
                       >
-                        <Trash />
+                        <Trash className={s.controlButtonIcon} />
                       </button>
                     </div>
                     {isCompleted && (
@@ -191,14 +191,14 @@ export const Habits = () => {
             </div>
           );
         })}
-      <div className={clsx(s.habitLevel)}>
+      <div className={clsx(s.habitLevel, s.habitCreateLevel)}>
         {habitLevelFormState && habitLevelFormState.type === 'create' ? (
           <HabitLevelForm
             cancelHandler={cancelHandler}
             habitLevelHandler={createHabitLevelHandler}
           />
         ) : (
-          <button onClick={createOpenHandler} className={clsx(s.habitLevel, s.habitCreateLevel)}>
+          <button onClick={createOpenHandler} className={s.habitCreateLevelButton}>
             <Plus />
           </button>
         )}

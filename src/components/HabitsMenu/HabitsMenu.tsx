@@ -10,8 +10,13 @@ import {
 import clsx from 'clsx';
 import { SquarePen, Trash } from 'lucide-react';
 
-export const HabitsMenu = () => {
-  const [isShowForm, setIsShowForm] = React.useState(false);
+type HabitsMenuProps = {
+  isShowForm: boolean;
+  handleOpenForm: () => void;
+  setIsShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: HabitsMenuProps) => {
   const [name, setName] = React.useState('');
   const [isActiveSave, setIsActiveSave] = React.useState(false);
   const [isActiveEdit, setIsActiveEdit] = React.useState(false);
@@ -22,10 +27,6 @@ export const HabitsMenu = () => {
   const [createHabit] = useCreateHabitMutation();
   const [deleteHabit] = useDeleteHabitMutation();
   const [updateHabit] = useUpdateHabitMutation();
-
-  const handleOpenForm = () => {
-    setIsShowForm((prev) => !prev);
-  };
 
   const handleInputName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -72,7 +73,7 @@ export const HabitsMenu = () => {
           Create Category
         </button>
         {data && data.length > 0 && (
-          <button onClick={handleEditCategories}>
+          <button className={s.editCategory} onClick={handleEditCategories}>
             <SquarePen />
           </button>
         )}
@@ -101,14 +102,24 @@ export const HabitsMenu = () => {
             return (
               <li key={habit.id} className={s.linksItem}>
                 {habitEditingId === habit.id ? (
-                  <div>
+                  <div className={s.habitEditWrapper}>
                     <input
+                      className={s.habitInput}
                       value={draftHabitName}
                       onChange={(event) => setDraftHabitName(event.target.value)}
                       type="text"
                     ></input>
-                    <button onClick={() => handleHabitEditSave(habit.id)}>Save</button>
-                    <button onClick={handleExitHabitEdit}>Cancel</button>
+                    <div className={s.editHabitButtons}>
+                      <button
+                        className={s.editHabitButton}
+                        onClick={() => handleHabitEditSave(habit.id)}
+                      >
+                        Save
+                      </button>
+                      <button className={s.editHabitButton} onClick={handleExitHabitEdit}>
+                        Cancel
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <React.Fragment>
@@ -117,10 +128,16 @@ export const HabitsMenu = () => {
                     </NavLink>
                     {isActiveEdit && (
                       <div className={s.bottomButtonsWrapper}>
-                        <button onClick={() => handleEditHabit(habit.id, habit.name)}>
+                        <button
+                          className={s.habitControlButton}
+                          onClick={() => handleEditHabit(habit.id, habit.name)}
+                        >
                           <SquarePen />
                         </button>
-                        <button onClick={() => handleDeleteCategory(habit.id)}>
+                        <button
+                          className={s.habitControlButton}
+                          onClick={() => handleDeleteCategory(habit.id)}
+                        >
                           <Trash />
                         </button>
                       </div>

@@ -1,4 +1,5 @@
 .categories {
+  flex-shrink: 0;
   width: 250px;
   height: 100%;
   padding: 20px;
@@ -17,7 +18,10 @@
 }
 
 .linksItem {
+  display: flex;
+  justify-content: space-between;
   padding: 10px;
+  min-height: 45px;
 
   color: #ffffff;
   font-weight: 500;
@@ -53,11 +57,23 @@
   border: none;
 }
 
+.editCategory {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #ffffff;
+
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: var(--accent-theme-color);
+  border: none;
+}
+
 .createForm {
   padding: 10px 5px;
 
   border-radius: 5px;
-  border: 1px solid #ffffff;
 }
 
 .inputName {
@@ -69,14 +85,14 @@
 
   border-radius: 5px;
   background-color: transparent;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--main-theme-background);
 
   &:focus {
     outline: none;
   }
 
   &::placeholder {
-    color: #ffffff76;
+    color: #ffffff;
   }
 }
 
@@ -93,11 +109,11 @@
   cursor: pointer;
   background-color: var(--accent-theme-color);
   border-radius: 5px;
-  border: none;
+  border: 1px solid var(--main-theme-background);
 }
 
 .disabledSave {
-  opacity: 0.4;
+  opacity: 0.6;
   pointer-events: none;
 }
 
@@ -110,4 +126,53 @@
 .bottomButtonsWrapper {
   display: flex;
   margin-left: auto;
+  gap: 4px;
+}
+
+.habitControlButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  width: 25px;
+  padding: 4px;
+
+  color: #ffffff;
+
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: var(--accent-theme-color);
+  border: none;
+}
+
+.habitEditWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.habitInput {
+  padding: 4px;
+
+  color: #ffffff;
+
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid var(--main-theme-background);
+}
+
+.editHabitButtons {
+  display: flex;
+  gap: 4px;
+}
+
+.editHabitButton {
+  padding: 4px 8px;
+
+  color: #ffffff;
+
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid var(--main-theme-background);
+  border-radius: 4px;
 }
