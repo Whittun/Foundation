@@ -7,7 +7,7 @@ import {
   useGetHabitLevelsByHabitQuery,
   useUpdateHabitLevelMutation,
 } from '../../api/habitsApi';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import React from 'react';
 import type { UpdateHabitLevelArgs } from '../../types/habitsTypes';
 import { HabitLevelForm } from './components/HabitLevelForm';
@@ -27,11 +27,22 @@ export const Habits = () => {
   const { habitId } = useParams();
 
   const numericHabitId = Number(habitId);
+  const isValidHabitId = Number.isInteger(numericHabitId);
 
-  const { data } = useGetHabitLevelsByHabitQuery({ habitId: numericHabitId }, { skip: !habitId });
+  if (!isValidHabitId) {
+    return <Navigate to="/habits" replace />;
+  }
+
+  const { data, error, isError, isSuccess } = useGetHabitLevelsByHabitQuery(
+    { habitId: numericHabitId },
+    { skip: !isValidHabitId },
+  );
+
   const [createHabitLevel] = useCreateHabitLevelMutation();
   const [updateHabitLevel] = useUpdateHabitLevelMutation();
   const [deleteHabitLevel] = useDeleteHabitLevelMutation();
+
+  const navigate = useNavigate();
 
   const createOpenHandler = () => {
     setHabitLevelFormState({ type: 'create' });
@@ -93,10 +104,23 @@ export const Habits = () => {
     deleteHabitLevel({ habitLevelId });
   };
 
-  return (
-    <div className={s.detailRoot}>
-      {data &&
-        data.map((habitLevel) => {
+  React.useEffect(() => {
+    if (isValidHabitId && isSuccess && habitId) {
+      localStorage.setItem('lastOpenedHabitId', `${habitId}`);
+    }
+  }, [isSuccess, habitId, isValidHabitId]);
+
+  React.useEffect(() => {
+    if (isError && 'status' in error && error.status === 404) {
+      localStorage.removeItem('lastOpenedHabitId');
+      navigate('/habits', { replace: true });
+    }
+  }, [isError, error, navigate]);
+
+  if (isSuccess) {
+    return (
+      <div className={s.detailRoot}>
+        {data.map((habitLevel) => {
           const isCompleted = habitLevel.target <= habitLevel.progress;
 
           const isEdit =
@@ -191,18 +215,19 @@ export const Habits = () => {
             </div>
           );
         })}
-      <div className={clsx(s.habitLevel, s.habitCreateLevel)}>
-        {habitLevelFormState && habitLevelFormState.type === 'create' ? (
-          <HabitLevelForm
-            cancelHandler={cancelHandler}
-            habitLevelHandler={createHabitLevelHandler}
-          />
-        ) : (
-          <button onClick={createOpenHandler} className={s.habitCreateLevelButton}>
-            <Plus />
-          </button>
-        )}
+        <div className={clsx(s.habitLevel, s.habitCreateLevel)}>
+          {habitLevelFormState && habitLevelFormState.type === 'create' ? (
+            <HabitLevelForm
+              cancelHandler={cancelHandler}
+              habitLevelHandler={createHabitLevelHandler}
+            />
+          ) : (
+            <button onClick={createOpenHandler} className={s.habitCreateLevelButton}>
+              <Plus />
+            </button>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };

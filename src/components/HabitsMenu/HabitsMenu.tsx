@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import s from './HabitsMenu.module.css';
 import {
   useCreateHabitMutation,
@@ -23,10 +23,14 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
   const [habitEditingId, setHabitEditingId] = React.useState<number | null>(null);
   const [draftHabitName, setDraftHabitName] = React.useState('');
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   const { data } = useGetAllHabitsQuery();
   const [createHabit] = useCreateHabitMutation();
   const [deleteHabit] = useDeleteHabitMutation();
   const [updateHabit] = useUpdateHabitMutation();
+
+  const navigate = useNavigate();
 
   const handleInputName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -39,8 +43,9 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
     }
   };
 
-  const handleCreateHabit = (habitObj: { name: string }) => {
-    createHabit(habitObj);
+  const handleCreateHabit = async (habitObj: { name: string }) => {
+    const newHabit = await createHabit(habitObj).unwrap();
+    navigate(`/habits/${newHabit.id}`);
     setIsShowForm(false);
   };
 
@@ -66,6 +71,12 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
     setHabitEditingId(null);
   };
 
+  React.useEffect(() => {
+    if (isShowForm) {
+      inputRef.current?.focus();
+    }
+  }, [isShowForm]);
+
   return (
     <section className={s.categories}>
       <div className={s.upButtonsWrapper}>
@@ -81,6 +92,7 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
       {isShowForm && (
         <form className={s.createForm} action="">
           <input
+            ref={inputRef}
             onChange={handleInputName}
             className={s.inputName}
             placeholder="Habit name"

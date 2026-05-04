@@ -6,7 +6,7 @@ import { YearTrackerPage } from './pages/YearTrackerPage';
 import { AppLayout } from './layout';
 import { Habits } from './components/Habits';
 import { HabitsPage } from './pages/HabitsPage';
-import { EmptyHabits } from './components/EmptyHabits';
+import { HabitsIndex } from './components/HabitsIndex';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={'Main Page!'} />
         <Route path="/yearTracker" element={<YearTrackerPage />} />
         <Route path="/habits" element={<HabitsPage />}>
-          <Route index element={<EmptyHabits />} />
+          <Route index element={<HabitsIndex />} />
           <Route path=":habitId" element={<Habits />} />
         </Route>
       </Route>
