@@ -9,7 +9,6 @@
 body {
   min-height: 100vh;
   margin: 0;
-  padding: 15px;
 
   font-family: 'Nunito', sans-serif;
 
@@ -17,5 +16,6 @@ body {
 }
 
 #root {
-  min-height: calc(100vh - 30px);
+  min-height: 100vh;
+  padding: 16px;
 }

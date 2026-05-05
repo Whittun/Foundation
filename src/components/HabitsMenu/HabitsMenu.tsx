@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import s from './HabitsMenu.module.css';
 import {
   useCreateHabitMutation,
@@ -32,6 +32,8 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
 
   const navigate = useNavigate();
 
+  const { habitId: habitQueryId } = useParams();
+
   const handleInputName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setName(value);
@@ -53,8 +55,13 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
     setIsActiveEdit((prev) => !prev);
   };
 
-  const handleDeleteCategory = (habitId: number) => {
-    deleteHabit({ habitId });
+  const handleDeleteCategory = async (habitId: number) => {
+    await deleteHabit({ habitId }).unwrap();
+
+    if (`${habitId}` === habitQueryId) {
+      localStorage.removeItem('lastOpenedHabitId');
+      navigate('/habits', { replace: true });
+    }
   };
 
   const handleEditHabit = (habitId: number, name: string) => {
@@ -135,7 +142,10 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
                   </div>
                 ) : (
                   <React.Fragment>
-                    <NavLink className={s.link} to={`${habit.id}`}>
+                    <NavLink
+                      className={({ isActive }) => clsx(s.link, isActive && s.activeLink)}
+                      to={`${habit.id}`}
+                    >
                       {habit.name}
                     </NavLink>
                     {isActiveEdit && (

@@ -4,7 +4,7 @@
 }
 
 .aside {
-  position: sticky;
+  position: fixed;
   top: 15px;
 
   align-self: flex-start;
@@ -12,4 +12,5 @@
 
 .mainContent {
   width: 100%;
+  margin-left: calc(250px + 16px);
 }

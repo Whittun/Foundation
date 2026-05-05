@@ -6,4 +6,5 @@
 
 .levelsWrapper {
   flex-grow: 1;
+  margin-right: calc(250px + 16px);
 }
