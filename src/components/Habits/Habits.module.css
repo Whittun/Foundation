@@ -119,6 +119,12 @@
   background-color: var(--accent-theme-color);
   border: none;
   cursor: pointer;
+
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--button-hover-bg);
+  }
 }
 
 .habitCreateLevel {
@@ -136,6 +142,8 @@
 
   cursor: pointer;
   background-color: transparent;
+
+  transition: all 0.2s;
 
   border: 1px dashed #ffffff;
   border-radius: 15px;
@@ -164,6 +172,12 @@
   border-radius: 5px;
   background-color: var(--accent-theme-color);
   cursor: pointer;
+
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--button-hover-bg);
+  }
 }
 
 .controlButtonIcon {

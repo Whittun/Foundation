@@ -3,6 +3,8 @@
   --main-theme-color: #595b98;
   --main-theme-background: rgb(128, 126, 188);
   --accent-theme-color: color-mix(in srgb, var(--main-theme-color) 90%, black);
+  --button-hover-bg: color-mix(in srgb, var(--accent-theme-color) 85%, black);
+  --error-color: #ff6b6b;
 
   --rating-1: #f98c8c7f;
   --rating-2: #fdbd7477;

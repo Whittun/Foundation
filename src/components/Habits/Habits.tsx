@@ -24,6 +24,10 @@ export const Habits = () => {
     id?: number;
   } | null>();
 
+  const [createErrors, setCreateErrors] = React.useState<{ level: string | null }>({
+    level: null,
+  });
+
   const { habitId } = useParams();
 
   const numericHabitId = Number(habitId);
@@ -56,7 +60,7 @@ export const Habits = () => {
     setHabitLevelFormState({ type: 'edit', id: habitLevelId });
   };
 
-  const createHabitLevelHandler = (inputsValues: DraftInputsValues) => {
+  const createHabitLevelHandler = async (inputsValues: DraftInputsValues) => {
     if (
       !inputsValues.levelValue ||
       !inputsValues.targetValue ||
@@ -66,14 +70,25 @@ export const Habits = () => {
       throw new Error('Habit args is missing');
     }
 
-    createHabitLevel({
-      level: inputsValues.levelValue,
-      description: inputsValues.descriptionValue,
-      target: inputsValues.targetValue,
-      habitId: numericHabitId,
-    });
+    try {
+      setCreateErrors({ level: null });
 
-    setHabitLevelFormState(null);
+      await createHabitLevel({
+        level: inputsValues.levelValue,
+        description: inputsValues.descriptionValue,
+        target: inputsValues.targetValue,
+        habitId: numericHabitId,
+      }).unwrap();
+
+      setHabitLevelFormState(null);
+    } catch (error) {
+      if (typeof error === 'object' && error !== null && 'data' in error) {
+        const errorData = error.data as { message: string };
+
+        setCreateErrors({ level: errorData.message });
+        console.error(errorData.message);
+      }
+    }
   };
 
   const editHabitLevelHandler = (inputsValues: DraftInputsValues, habitLevelId: number) => {
@@ -220,6 +235,8 @@ export const Habits = () => {
             <HabitLevelForm
               cancelHandler={cancelHandler}
               habitLevelHandler={createHabitLevelHandler}
+              errors={createErrors}
+              setErrors={setCreateErrors}
             />
           ) : (
             <button onClick={createOpenHandler} className={s.habitCreateLevelButton}>
