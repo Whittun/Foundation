@@ -96,6 +96,8 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
     handleHabitEditSave(habitId);
   };
 
+  const isDisabledEdit = draftHabitName.trim().length < 3;
+
   return (
     <section className={s.categories}>
       <div className={s.upButtonsWrapper}>
@@ -118,6 +120,7 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
             type="text"
           />
           <button
+            onClick={() => handleCreateHabit({ name })}
             disabled={!isActiveSave}
             className={clsx(s.createButton, { [s.disabledSave]: !isActiveSave })}
             type="button"
@@ -143,7 +146,15 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
                       type="text"
                     ></input>
                     <div className={s.editHabitButtons}>
-                      <button className={s.editHabitButton}>Save</button>
+                      <button
+                        onClick={() => handleHabitEditSave(habit.id)}
+                        className={clsx(s.editHabitButton, {
+                          [s.disabledEdit]: isDisabledEdit,
+                        })}
+                        disabled={isDisabledEdit}
+                      >
+                        Save
+                      </button>
                       <button className={s.editHabitButton} onClick={handleExitHabitEdit}>
                         Cancel
                       </button>

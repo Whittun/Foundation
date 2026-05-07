@@ -105,6 +105,7 @@ export const HabitLevelForm = ({
       <div className={s.buttonsWrapper}>
         <button
           disabled={isDisabledSave}
+          onClick={() => habitLevelHandler(draftValues)}
           className={clsx(s.createLevelButton, { [s.createLevelButtonDisabled]: isDisabledSave })}
           type="submit"
         >

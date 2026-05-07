@@ -218,3 +218,8 @@
     background-color: var(--button-hover-bg);
   }
 }
+
+.disabledEdit {
+  opacity: 0.5;
+  pointer-events: none;
+}
