@@ -84,6 +84,18 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
     }
   }, [isShowForm]);
 
+  const handleCreateSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    handleCreateHabit({ name });
+  };
+
+  const handleEditSubmit = (event: React.SubmitEvent<HTMLFormElement>, habitId: number) => {
+    event.preventDefault();
+
+    handleHabitEditSave(habitId);
+  };
+
   return (
     <section className={s.categories}>
       <div className={s.upButtonsWrapper}>
@@ -97,7 +109,7 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
         )}
       </div>
       {isShowForm && (
-        <form className={s.createForm} action="">
+        <form onSubmit={handleCreateSubmit} className={s.createForm}>
           <input
             ref={inputRef}
             onChange={handleInputName}
@@ -107,7 +119,6 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
           />
           <button
             disabled={!isActiveSave}
-            onClick={() => handleCreateHabit({ name })}
             className={clsx(s.createButton, { [s.disabledSave]: !isActiveSave })}
             type="button"
           >
@@ -121,7 +132,10 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
             return (
               <li key={habit.id} className={s.linksItem}>
                 {habitEditingId === habit.id ? (
-                  <div className={s.habitEditWrapper}>
+                  <form
+                    onSubmit={(event) => handleEditSubmit(event, habit.id)}
+                    className={s.habitEditWrapper}
+                  >
                     <input
                       className={s.habitInput}
                       value={draftHabitName}
@@ -129,17 +143,12 @@ export const HabitsMenu = ({ isShowForm, handleOpenForm, setIsShowForm }: Habits
                       type="text"
                     ></input>
                     <div className={s.editHabitButtons}>
-                      <button
-                        className={s.editHabitButton}
-                        onClick={() => handleHabitEditSave(habit.id)}
-                      >
-                        Save
-                      </button>
+                      <button className={s.editHabitButton}>Save</button>
                       <button className={s.editHabitButton} onClick={handleExitHabitEdit}>
                         Cancel
                       </button>
                     </div>
-                  </div>
+                  </form>
                 ) : (
                   <React.Fragment>
                     <NavLink

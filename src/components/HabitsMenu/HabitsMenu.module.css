@@ -211,4 +211,10 @@
   background-color: transparent;
   border: 1px solid var(--main-theme-background);
   border-radius: 4px;
+
+  transition: 0.2s all;
+
+  &:hover {
+    background-color: var(--button-hover-bg);
+  }
 }

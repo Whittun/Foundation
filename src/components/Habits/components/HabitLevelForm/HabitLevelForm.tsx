@@ -43,8 +43,18 @@ export const HabitLevelForm = ({
     };
   }, []);
 
+  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (isDisabledSave) {
+      return;
+    }
+
+    habitLevelHandler(draftValues);
+  };
+
   return (
-    <div className={s.createLevel}>
+    <form onSubmit={handleSubmit} className={s.createLevel}>
       <p className={s.inputWrapper}>
         <label htmlFor="habit-level">level</label>
         <input
@@ -95,8 +105,8 @@ export const HabitLevelForm = ({
       <div className={s.buttonsWrapper}>
         <button
           disabled={isDisabledSave}
-          onClick={() => habitLevelHandler(draftValues)}
           className={clsx(s.createLevelButton, { [s.createLevelButtonDisabled]: isDisabledSave })}
+          type="submit"
         >
           Save
         </button>
@@ -104,6 +114,6 @@ export const HabitLevelForm = ({
           Cancel
         </button>
       </div>
-    </div>
+    </form>
   );
 };
